@@ -18,7 +18,7 @@ type GlobalState = {
   setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => void;
 };
 
-export const useGlobalState = create<GlobalState>(set => ({
+export const useGlobalState = create<GlobalState>((set: any) => ({
   nativeCurrencyPrice: 0,
   setNativeCurrencyPrice: (newValue: number): void => set(() => ({ nativeCurrencyPrice: newValue })),
   targetNetwork: scaffoldConfig.targetNetworks[0],

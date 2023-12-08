@@ -1,7 +1,7 @@
 import * as chains from "viem/chains";
 import scaffoldConfig from "~~/scaffold.config";
 
-type ChainAttributes = {
+export type TChainAttributes = {
   // color | [lightThemeColor, darkThemeColor]
   color: string | [string, string];
   // Used to fetch price by providing mainnet token address
@@ -9,9 +9,7 @@ type ChainAttributes = {
   nativeCurrencyTokenAddress?: string;
 };
 
-export type ChainWithAttributes = chains.Chain & Partial<ChainAttributes>;
-
-export const NETWORKS_EXTRA_DATA: Record<string, ChainAttributes> = {
+export const NETWORKS_EXTRA_DATA: Record<string, TChainAttributes> = {
   [chains.hardhat.id]: {
     color: "#b8af0c",
   },
@@ -60,7 +58,9 @@ export const NETWORKS_EXTRA_DATA: Record<string, ChainAttributes> = {
 
 /**
  * Gives the block explorer transaction URL.
- * Returns empty string if the network is a local chain
+ * @param network
+ * @param txnHash
+ * @dev returns empty string if the network is localChain
  */
 export function getBlockExplorerTxLink(chainId: number, txnHash: string) {
   const chainNames = Object.keys(chains);
@@ -86,8 +86,10 @@ export function getBlockExplorerTxLink(chainId: number, txnHash: string) {
 }
 
 /**
- * Gives the block explorer URL for a given address.
- * Defaults to Etherscan if no (wagmi) block explorer is configured for the network.
+ * Gives the block explorer Address URL.
+ * @param network - wagmi chain object
+ * @param address
+ * @returns block explorer address URL and etherscan URL if block explorer URL is not present for wagmi network
  */
 export function getBlockExplorerAddressLink(network: chains.Chain, address: string) {
   const blockExplorerBaseURL = network.blockExplorers?.default?.url;
@@ -103,11 +105,14 @@ export function getBlockExplorerAddressLink(network: chains.Chain, address: stri
 }
 
 /**
- * @returns targetNetworks array containing networks configured in scaffold.config including extra network metadata
+ * @returns targetNetwork object consisting targetNetwork from scaffold.config and extra network metadata
  */
-export function getTargetNetworks(): ChainWithAttributes[] {
-  return scaffoldConfig.targetNetworks.map(targetNetwork => ({
-    ...targetNetwork,
-    ...NETWORKS_EXTRA_DATA[targetNetwork.id],
-  }));
+
+export function getTargetNetwork(): chains.Chain & Partial<TChainAttributes> {
+  const configuredNetwork = scaffoldConfig.targetNetwork;
+
+  return {
+    ...configuredNetwork,
+    ...NETWORKS_EXTRA_DATA[configuredNetwork.id],
+  };
 }
