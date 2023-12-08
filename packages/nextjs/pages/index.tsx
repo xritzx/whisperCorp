@@ -29,7 +29,7 @@ const Home: NextPage = () => {
                 endIcon={<ArrowForwardIosRounded />}
                 style={{ color: grey[100], background: purple[400] }}
               >
-                Feeds
+                Feed
               </Button>
             </Link>
             <img src="home.png" alt="Descriptive Alt Text" style={{ maxWidth: '100%', marginTop: 20 }} />
