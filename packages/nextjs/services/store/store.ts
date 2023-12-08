@@ -1,6 +1,4 @@
-import create from "zustand";
-import scaffoldConfig from "~~/scaffold.config";
-import { ChainWithAttributes } from "~~/utils/scaffold-eth";
+import create from 'zustand';
 
 /**
  * Zustand Store
@@ -11,16 +9,12 @@ import { ChainWithAttributes } from "~~/utils/scaffold-eth";
  * Think about it as a global useState.
  */
 
-type GlobalState = {
-  nativeCurrencyPrice: number;
-  setNativeCurrencyPrice: (newNativeCurrencyPriceState: number) => void;
-  targetNetwork: ChainWithAttributes;
-  setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => void;
+type TGlobalState = {
+  accountAddress: string;
+  setAccountAddress: (address: string) => void;
 };
 
-export const useGlobalState = create<GlobalState>((set: any) => ({
-  nativeCurrencyPrice: 0,
-  setNativeCurrencyPrice: (newValue: number): void => set(() => ({ nativeCurrencyPrice: newValue })),
-  targetNetwork: scaffoldConfig.targetNetworks[0],
-  setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => set(() => ({ targetNetwork: newTargetNetwork })),
+export const useGlobalState = create<TGlobalState>(set => ({
+  accountAddress: "",
+  setAccountAddress: (address: string): void => set(() => ({ accountAddress: address })),
 }));
