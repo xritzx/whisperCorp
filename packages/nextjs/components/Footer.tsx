@@ -33,7 +33,7 @@ export const Footer = () => {
             rel="noreferrer"
           >
             <BuidlGuidlLogo className="w-3 h-5 pb-1" />
-            <span className="link">Scaffold-ETH-2</span>
+            <span className="link">whisperCorp-2</span>
           </a>
         </div>
         <span>·</span>

@@ -1,4 +1,4 @@
-# 🏗 Scaffold-ETH 2
+# 🏗 whisperCorp 2
 
 <h4 align="center">
   <a href="https://docs.scaffoldeth.io">Documentation</a> |
@@ -27,7 +27,7 @@ Before you begin, you need to install the following tools:
 
 ## Quickstart
 
-To get started with Scaffold-ETH 2, follow the steps below:
+To get started with whisperCorp 2, follow the steps below:
 
 1. Clone this repo & install dependencies
 
@@ -69,12 +69,12 @@ Run smart contract test with `yarn hardhat:test`
 
 ## Documentation
 
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
+Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with whisperCorp 2.
 
 To know more about its features, check out our [website](https://scaffoldeth.io).
 
-## Contributing to Scaffold-ETH 2
+## Contributing to whisperCorp 2
 
-We welcome contributions to Scaffold-ETH 2!
+We welcome contributions to whisperCorp 2!
 
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to whisperCorp 2.
