@@ -2,7 +2,6 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { Input } from "@material-tailwind/react";
 import styles from './feed.module.css';
 import Link from 'next/link';
 import commonStyles from './common.module.css';
@@ -200,23 +199,23 @@ const Feed = () => {
 
         <div className="p-4">
 
-        <Paper
-      onClick={openModal}
-      component="form"
-      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 570 }}
-    >
+          <Paper
+            onClick={openModal}
+            component="form"
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 570 }}
+          >
 
-      <InputBase
-        sx={{ ml: 1, flex: 1 }}
-        placeholder="🤫 start whispering now"
-        inputProps={{ 'aria-label': 'search google maps' }}
-      />
-  
-      <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-      <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
-        <DirectionsIcon />
-      </IconButton>
-    </Paper>
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="🤫 start whispering now"
+              inputProps={{ 'aria-label': 'search google maps' }}
+            />
+
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
+              <DirectionsIcon />
+            </IconButton>
+          </Paper>
           {modalOpen && (<CreatePostModal isOpen={modalOpen} onClose={closeModal} onSubmit={handleSubmit} />)}
         </div>
 
@@ -240,9 +239,8 @@ const Feed = () => {
                   @ Google
                 </p>
               </div>
-                <KeyboardArrowUpIcon style={{color:'#008800'}} onClick={() => upVote(data.cid, data.title)}/>
-
-                <KeyboardArrowDownIcon style={{color:'#ff0000'}} onClick={() => downVote(data.cid, data.title)} />
+              <KeyboardArrowUpIcon style={{ color: '#008800' }} onClick={() => upVote(data.cid, data.title)} />
+              <KeyboardArrowDownIcon style={{ color: '#ff0000' }} onClick={() => downVote(data.cid, data.title)} />
 
               <Typography
                 className="items-center justify-between"
