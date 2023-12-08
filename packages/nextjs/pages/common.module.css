@@ -1,0 +1,39 @@
+.page-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 900px;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.loader-parent {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 60px;
+  height: 60px;
+  aspect-ratio: 1;
+  background: linear-gradient(#60b99a 0 0) calc(1 * 100% / 3) 50%/25% 50%,
+    linear-gradient(#60b99a 0 0) calc(2 * 100% / 3) 50%/25% 50%,
+    linear-gradient(#f77825 0 0) 50% calc(1 * 100% / 3) / 50% 25%,
+    linear-gradient(#f77825 0 0) 50% calc(2 * 100% / 3) / 50% 25%,
+    linear-gradient(#554236 0 0) calc(1 * 100% / 3) calc(1 * 100% / 3) / 25% 25%,
+    linear-gradient(#554236 0 0) calc(2 * 100% / 3) calc(1 * 100% / 3) / 25% 25%,
+    linear-gradient(#554236 0 0) calc(1 * 100% / 3) calc(2 * 100% / 3) / 25% 25%,
+    linear-gradient(#554236 0 0) calc(2 * 100% / 3) calc(2 * 100% / 3) / 25% 25%;
+  background-repeat: no-repeat;
+  animation: l19 1s infinite alternate;
+}
+@keyframes l19 {
+  90%,
+  100% {
+    background-position: 0 50%, 100% 50%, 50% 0, 50% 100%, 0 0, 100% 0, 0 100%, 100% 100%;
+  }
+}
