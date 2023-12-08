@@ -11,7 +11,8 @@
     "format": "prettier --write . '!(node_modules|.next|contracts)/**/*'",
     "check-types": "tsc --noEmit --incremental",
     "vercel": "vercel",
-    "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true"
+    "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true",
+    "proto": "protons services/waku/proto/*.proto"
   },
   "dependencies": {
     "@ethersproject/providers": "^5.7.2",
@@ -23,6 +24,9 @@
     "daisyui": "^3.5.1",
     "next": "^13.1.6",
     "nextjs-progressbar": "^0.0.16",
+    "protobufjs": "^7.2.5",
+    "protons": "^7.3.0",
+    "protons-runtime": "^5.2.0",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",

@@ -25,7 +25,7 @@ export const RainbowKitCustomConnectButton = () => {
   const configuredNetwork = getTargetNetwork();
   const { disconnect } = useDisconnect();
   const { switchNetwork } = useSwitchNetwork();
-  const [addressCopied, setAddressCopied] = useState(false);
+  const [ addressCopied, setAddressCopied ] = useState(false);
 
   return (
     <ConnectButton.Custom>
