@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import commonStyles from './common.module.css';
-import styles from './posts.module.css';
+import styles from './feed.module.css';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { CardActionArea } from '@mui/material';
@@ -25,7 +25,7 @@ import { notification } from '~~/utils/scaffold-eth';
 import { createVote, loadVotes, subscribeToWakuVotes, } from '~~/services/waku/service';
 import { domain, types } from '~~/utils/signMessage';
 
-const Posts = () => {
+const Feed = () => {
   const { node, isLoading } = useLightNode();
   const { accountAddress } = useGlobalState();
   const [uploads, setUploads] = useState<any>({});
@@ -269,4 +269,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default Feed;
