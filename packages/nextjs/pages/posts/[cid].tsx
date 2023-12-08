@@ -62,8 +62,7 @@ const PostDetail = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const signPayload = {
-      message: inputValue,
-      timestamp: String(Date.now()),
+      address: accountAddress,
       postId: cid
     }
     const userTypedSignature = await signTypedData({ domain, types, primaryType: 'Thread', message: signPayload });

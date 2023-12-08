@@ -14,8 +14,7 @@ export const types = {
     { name: 'disclaimer', type: 'string' },
   ],
   Thread: [
-    { name: 'message', type: 'string' },
-    { name: 'timestamp', type: 'string' },
+    { name: 'address', type: 'string' },
     { name: 'postId', type: 'string' }
   ],
   Vote: [

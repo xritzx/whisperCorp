@@ -7,7 +7,7 @@ export const sendMessageToThread = async (
   lightNode: LightNode | null,
   threadId: string,
   message: string,
-  userTypedSignature: string
+  userTypedSignature: string,
 ): Promise<void> => {
   // const lightNode = await getLightNode();
   console.log('Sender : Light Node started');
