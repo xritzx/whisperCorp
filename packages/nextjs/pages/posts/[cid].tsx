@@ -16,6 +16,8 @@ import { getContents } from '~~/services/lighthouse';
 import { sendMessageToThread, loadThread, decodeThreadMessage, subscribeToWakuComment } from '~~/services/waku/service';
 import { BlockieAvatar } from '~~/components/scaffold-eth';
 import { useGlobalState } from '~~/services/store/store';
+import { signTypedData } from '@wagmi/core';
+import { domain, types } from '~~/utils/signMessage';
 
 const PostDetail = () => {
   const router = useRouter();
@@ -59,11 +61,13 @@ const PostDetail = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    // if(inputValue.length < 10) {
-    //   notification.warning('Please input a meaningful comment');
-    //   return;
-    // }
-    await sendMessageToThread(node, cid, inputValue);
+    const signPayload = {
+      message: inputValue,
+      timestamp: String(Date.now()),
+      postId: cid
+    }
+    const userTypedSignature = await signTypedData({ domain, types, primaryType: 'Thread', message: signPayload });
+    await sendMessageToThread(node, cid, inputValue, userTypedSignature);
     setInputValue('');
   };
 
@@ -109,7 +113,7 @@ const PostDetail = () => {
           <div key={index} className={styles.comment}>
             <div>
               <BlockieAvatar 
-                address={accountAddress} 
+                address={obj.sign} 
                 size={20} 
               />
             </div>

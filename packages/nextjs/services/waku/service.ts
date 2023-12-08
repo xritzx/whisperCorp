@@ -7,6 +7,7 @@ export const sendMessageToThread = async (
   lightNode: LightNode | null,
   threadId: string,
   message: string,
+  userTypedSignature: string
 ): Promise<void> => {
   // const lightNode = await getLightNode();
   console.log('Sender : Light Node started');
@@ -22,6 +23,7 @@ export const sendMessageToThread = async (
   const serialisedMessage = Thread.encode({
     timestamp: BigInt(Date.now()),
     message: message,
+    sign: userTypedSignature
   });
 
   // Send the message using Light Push

@@ -1,6 +1,6 @@
 // All properties on a domain are optional
 export const domain = {
-  name: 'Hackathon',
+  name: 'whispherCorp',
   version: '1',
   // chainId: 1,
 } as const;
@@ -13,7 +13,11 @@ export const types = {
     { name: 'date', type: 'string' },
     { name: 'disclaimer', type: 'string' },
   ],
-
+  Thread: [
+    { name: 'message', type: 'string' },
+    { name: 'timestamp', type: 'string' },
+    { name: 'postId', type: 'string' }
+  ],
   Vote: [
     { name: 'postId', type: 'string' },
     { name: 'title', type: 'string' },
