@@ -68,3 +68,21 @@ export const decodeMessage = (wakuMessage: any) => {
   const messageObj = Thread.decode(wakuMessage.proto.payload);
   return messageObj;
 };
+
+export const subscribeToWakuVotes = async (node: LightNode, callback: any) => {
+  await node.filter.subscribe([createDecoder(VoteTopic)], wakuMessage => {
+    const messageObj = Vote.decode(wakuMessage.payload);
+    callback({
+      ...messageObj,
+    });
+  });
+};
+
+export const subscribeToWakuComment = async (threadId: string, node: LightNode, callback: any) => {
+  await node.filter.subscribe([createDecoder(threadId)], wakuMessage => {
+    const messageObj = Thread.decode(wakuMessage.payload);
+    callback({
+      ...messageObj,
+    });
+  });
+};
