@@ -190,7 +190,7 @@ const Feed = () => {
 
   return (
     <>
-      <div className={commonStyles['page-container']}>
+      <Box className={commonStyles['page-container']}>
         <form onSubmit={handleSubmit} className={styles['posts-form']}>
           <Box
             sx={{
@@ -222,7 +222,7 @@ const Feed = () => {
             Post
           </Button>
         </form>
-        <div>
+        <Box>
           {Object.values(uploads).map((data: any) => (
             <div key={data.cId} className={styles['card-parent']}>
               <Box sx={{ display: 'flex', alignItems: 'start' }}>
@@ -263,8 +263,8 @@ const Feed = () => {
               </Box>
             </div>
           ))}
-        </div>
-      </div>
+        </Box>
+      </Box>
     </>
   );
 };
