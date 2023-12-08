@@ -14,6 +14,8 @@ import { useLightNode } from '~~/services/waku/LightNodeContext';
 import { Thread } from '~~/services/waku/proto/thread';
 import { getContents } from '~~/services/lighthouse';
 import { sendMessageToThread, loadThread, decodeThreadMessage, subscribeToWakuComment } from '~~/services/waku/service';
+import { BlockieAvatar } from '~~/components/scaffold-eth';
+import { useGlobalState } from '~~/services/store/store';
 
 const PostDetail = () => {
   const router = useRouter();
@@ -22,6 +24,7 @@ const PostDetail = () => {
   const [inputValue, setInputValue] = useState('');
   const [threadMessages, setThreadMessages] = useState<any[]>([]);
   const [postDetails, setPostDetails] = useState<any>('');
+  const { accountAddress } = useGlobalState();
 
   const storeQueryFunction = async (node: LightNode, cid: string) => {
     const messagesArray: any[] = [];
@@ -105,7 +108,10 @@ const PostDetail = () => {
         {threadMessages.map((obj, index) => (
           <div key={index} className={styles.comment}>
             <div>
-              <Image src="/user-image.png" width={20} height={20} alt="Picture of the commenter" />
+              <BlockieAvatar 
+                address={accountAddress} 
+                size={20} 
+              />
             </div>
             <Typography variant="body2" color="text.secondary" sx={{ marginLeft: '10px' }}>
               {obj.message}
