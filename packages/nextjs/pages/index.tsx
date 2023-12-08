@@ -24,7 +24,7 @@ const Home: NextPage = () => {
             <Typography variant="body1" align="center" className="pt">
               Welcome to a new era of corporate communication where your voice matters without compromising your identity. Our platform, built on the robust and decentralized Waku protocol, redefines how employees interact within their corporate ecosystem. We champion the power of anonymous dialogue, empowering you to share insights, feedback, and ideas fearlessly
             </Typography>
-            <Link style={{ margin: 20, color:"transparent", boxShadow:"0 0 5px #9c27b0, 0 0 10px #9c27b0, 0 0 20px #9c27b0, 0 0 30px #9c27b0" }} href="/posts" passHref>
+            <Link style={{ margin: 20, color: "transparent", boxShadow: "0 0 5px #9c27b0, 0 0 10px #9c27b0, 0 0 20px #9c27b0, 0 0 30px #9c27b0" }} href="/feed" passHref>
               <Button
                 endIcon={<ArrowForwardIosRounded />}
                 style={{ color: grey[100], background: purple[400] }}
