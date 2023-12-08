@@ -1,0 +1,21 @@
+.posts-container {
+  align-items: stretch;
+  width: 900px;
+}
+
+.comment-container {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  flex-direction: column;
+}
+
+.comment {
+  display: flex;
+  margin-top: 10px;
+}
+
+.comment-parent {
+  overflow-y: auto;
+  max-height: 500px;
+}

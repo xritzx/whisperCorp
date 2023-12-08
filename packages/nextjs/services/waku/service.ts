@@ -62,7 +62,7 @@ export const loadVotes = async (lightNode: LightNode) => {
 };
 
 // Create the callback function
-export const decodeMessage = (wakuMessage: any) => {
+export const decodeThreadMessage = (wakuMessage: any) => {
   // Check if there is a payload on the message
   if (!wakuMessage.proto.payload) return;
   const messageObj = Thread.decode(wakuMessage.proto.payload);
