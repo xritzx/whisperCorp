@@ -15,6 +15,8 @@
     "proto": "protons services/waku/proto/*.proto"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@ethersproject/providers": "^5.7.2",
     "@heroicons/react": "^2.0.11",
     "@lighthouse-web3/sdk": "^0.3.0",

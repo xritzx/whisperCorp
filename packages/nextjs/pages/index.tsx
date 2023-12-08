@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { NextPage } from 'next';
 import { MetaHeader } from '~~/components/MetaHeader';
 import { Box, Button, Container, Typography } from '@mui/material';
-import { ArrowForwardIosRounded, RoundedCorner } from '@mui/icons-material';
+import { ArrowForwardIosRounded } from '@mui/icons-material';
 import { grey, purple } from '@mui/material/colors';
 
 const Home: NextPage = () => {
