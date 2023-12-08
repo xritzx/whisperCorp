@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { Bars3Icon, InboxIcon } from "@heroicons/react/24/outline";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
+import { useDarkMode } from 'usehooks-ts';
 
 type HeaderMenuLink = {
   label: string;
@@ -56,6 +57,7 @@ export const HeaderMenuLinks = () => {
 export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const burgerMenuRef = useRef<HTMLDivElement>(null);
+  const { isDarkMode } = useDarkMode();
   useOutsideClick(
     burgerMenuRef,
     useCallback(() => setIsDrawerOpen(false), []),
@@ -88,7 +90,7 @@ export const Header = () => {
         </div>
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
           <div className="flex relative w-10 h-10">
-            <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" />
+            <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" style={{ filter: isDarkMode ? "invert(100%)" : 'none' }}/>
           </div>
           <div className="flex flex-col">
             <span className="font-bold leading-tight">whisperCorp</span>
