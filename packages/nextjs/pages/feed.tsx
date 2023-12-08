@@ -2,20 +2,15 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import { Input } from "@material-tailwind/react";
+import styles from './feed.module.css';
 import Link from 'next/link';
 import commonStyles from './common.module.css';
-import styles from './feed.module.css';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import { CardActionArea } from '@mui/material';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/system/Box';
 import { signTypedData } from '@wagmi/core';
 import { LightNode } from '@waku/sdk';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { format } from 'date-fns';
 import { useGlobalState } from '~~/services/store/store';
 import { useLightNode } from '~~/services/waku/LightNodeContext';
@@ -24,14 +19,28 @@ import { getContents, getUploads, upload } from '~~/services/lighthouse';
 import { notification } from '~~/utils/scaffold-eth';
 import { createVote, loadVotes, subscribeToWakuVotes, } from '~~/services/waku/service';
 import { domain, types } from '~~/utils/signMessage';
+import CreatePostModal from '~~/components/modal';
+import { Button, Typography } from '@mui/material';
+
+
+import Paper from '@mui/material/Paper';
+import InputBase from '@mui/material/InputBase';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import DirectionsIcon from '@mui/icons-material/Directions';
 
 const Feed = () => {
   const { node, isLoading } = useLightNode();
   const { accountAddress } = useGlobalState();
   const [uploads, setUploads] = useState<any>({});
   const [date] = useState(format(new Date(), 'yyyy-MM-dd'));
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
 
   const onlikesData = (data: any) => {
     if (uploads[data.cId] === undefined) {
@@ -47,7 +56,7 @@ const Feed = () => {
 
   const upVote = async (cid: string, title: string) => {
     if (!accountAddress) {
-      notification.error('Please sign in to web3blind ');
+      notification.error('Please sign in to whisperCorp ');
       return;
     }
     const voteData = {
@@ -117,8 +126,7 @@ const Feed = () => {
     }
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = async (title: string, body: string) => {
     if (!accountAddress) {
       notification.error('Please sign in to web3blind ');
       return;
@@ -143,8 +151,6 @@ const Feed = () => {
 
     const hash = await upload(postData);
     console.log('use this hash to start a thread', hash);
-    setTitle('');
-    setBody('');
 
     await new Promise(resolve => {
       setTimeout(resolve, 3000);
@@ -191,79 +197,80 @@ const Feed = () => {
   return (
     <>
       <Box className={commonStyles['page-container']}>
-        <form onSubmit={handleSubmit} className={styles['posts-form']}>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              marginBottom: '10px',
-              justifyContent: 'space-between',
-            }}
-          >
-            <TextField
-              label="Title"
-              variant="outlined"
-              type="text"
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-            />
-            <div className={styles.mb10} />
-            <TextField
-              label="Body"
-              variant="outlined"
-              type="text"
-              value={body}
-              onChange={e => setBody(e.target.value)}
-              multiline
-              rows={6}
-            />
-          </Box>
-          <Button variant="contained" type="submit">
-            Post
-          </Button>
-        </form>
-        <Box>
-          {Object.values(uploads).map((data: any) => (
-            <div key={data.cId} className={styles['card-parent']}>
-              <Box sx={{ display: 'flex', alignItems: 'start' }}>
-                <Card sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <Button onClick={() => upVote(data.cid, data.title)}>
-                      <ArrowUpwardIcon />
-                    </Button>
-                    <Button onClick={() => downVote(data.cid, data.title)}>
-                      <ArrowDownwardIcon />
-                    </Button>
-                    <Typography
-                      sx={{
-                        mt: 1,
-                        color: data.votes < 0 ? 'red' : 'green',
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      {data.votes}
-                    </Typography>
-                  </Box>
-                  <Link href={`/posts/${data.cid}`} passHref key={data.cid} className={styles.link}>
-                    <CardActionArea>
-                      <CardContent sx={{ textDecoration: 'none !important' }}>
-                        <Typography gutterBottom variant="h5" component="div">
-                          {data.title}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {data.body}
-                        </Typography>
-                        <Typography variant="body2" color="text.tertiary">
-                          {data.date}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Link>
-                </Card>
-              </Box>
+
+        <div className="p-4">
+
+        <Paper
+      onClick={openModal}
+      component="form"
+      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 570 }}
+    >
+
+      <InputBase
+        sx={{ ml: 1, flex: 1 }}
+        placeholder="🤫 start whispering now"
+        inputProps={{ 'aria-label': 'search google maps' }}
+      />
+  
+      <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+      <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
+        <DirectionsIcon />
+      </IconButton>
+    </Paper>
+          {modalOpen && (<CreatePostModal isOpen={modalOpen} onClose={closeModal} onSubmit={handleSubmit} />)}
+        </div>
+
+        {Object.values(uploads).map((data: any) => (
+          <div key={data.cId}
+            className="relative flex w-full max-w-[35rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none">
+            <div
+              className="relative flex gap-4 pt-0 pb-1 mx-0 mt-4 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
+              <img
+                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
+                alt="block"
+                className="relative inline-block h-[60px] w-[60px] !rounded-full  object-cover object-center" />
+              <div className="flex w-full flex-col gap-0.5">
+                <div className="flex items-center justify-between">
+                  <h5
+                    className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                    Category Name
+                  </h5>
+                </div>
+                <p className="block font-sans text-base antialiased font-light leading-relaxed text-blue-gray-900" style={{ margin: "1px" }}>
+                  @ Google
+                </p>
+              </div>
+                <KeyboardArrowUpIcon style={{color:'#008800'}} onClick={() => upVote(data.cid, data.title)}/>
+
+                <KeyboardArrowDownIcon style={{color:'#ff0000'}} onClick={() => downVote(data.cid, data.title)} />
+
+              <Typography
+                className="items-center justify-between"
+                sx={{
+                  color: data.votes < 0 ? 'red' : 'green',
+                  fontWeight: 'bold',
+                  justifyContent: 'center',
+                }}
+              >
+                {data.votes}
+              </Typography>
             </div>
-          ))}
-        </Box>
+            <Link href={`/posts/${data.cid}`} passHref key={data.cid} className={styles.link}>
+
+              <div className="p-0 mb-4">
+                <h5
+                  className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900 mt-1">
+                  {data.title}
+                </h5>
+
+                <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit mt-1">
+                  {data.body}
+                </p>
+
+              </div>
+            </Link>
+          </div>
+        ))}
       </Box>
     </>
   );
