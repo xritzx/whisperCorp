@@ -1,7 +1,8 @@
-# BI\*\*H YOUR COMPANY!
+# WHISPER CORP
 
 ## Overview
 
+**Bitch Your Company!**\
 This project offers a decentralized, anonymous forum for discussing workspace issues. Leveraging advanced technologies, it provides a safe environment for users to share experiences related to their workspace without compromising their privacy or identity.
 
 ## Key Features
