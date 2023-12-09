@@ -19,20 +19,19 @@ import { notification } from '~~/utils/scaffold-eth';
 import { createVote, loadVotes, subscribeToWakuVotes, } from '~~/services/waku/service';
 import { domain, types } from '~~/utils/signMessage';
 import CreatePostModal from '~~/components/modal';
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
+
 import DirectionsIcon from '@mui/icons-material/Directions';
 
 const Feed = () => {
   const { node, isLoading } = useLightNode();
-  const { accountAddress } = useGlobalState();
+  const { accountAddress, category } = useGlobalState();
   const [uploads, setUploads] = useState<any>({});
   const [date] = useState(format(new Date(), 'yyyy-MM-dd'));
 
@@ -127,10 +126,16 @@ const Feed = () => {
 
   const handleSubmit = async (title: string, body: string) => {
     if (!accountAddress) {
-      notification.error('Please sign in to web3blind ');
+      notification.error('Please sign in to whisperCorp ');
       return;
     }
-    const postData = { title, body, date, disclaimer: 'This is a disclaimer which needs to be defined' };
+    const postData = { 
+      title,
+      body,
+      date,
+      disclaimer: 'Your signature would be taken in the post, no data is stored',
+      category
+    };
 
     if (title.length === 0 || body.length === 0) {
       alert('Please fill out both the fields');
@@ -232,7 +237,7 @@ const Feed = () => {
                 <div className="flex items-center justify-between">
                   <h5
                     className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                    Category Name
+                    {data.category? data.category: "📺 Misc"}
                   </h5>
                 </div>
                 <p className="block font-sans text-base antialiased font-light leading-relaxed text-blue-gray-900" style={{ margin: "1px" }}>

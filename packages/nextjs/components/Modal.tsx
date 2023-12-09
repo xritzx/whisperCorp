@@ -2,6 +2,7 @@ import React, { useState, FC } from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Dropdown from './Dropdown';
 
 type CreatePostModalProps = {
   isOpen: boolean;
@@ -45,6 +46,8 @@ const CreatePostModal: FC<CreatePostModalProps> = ({ isOpen, onClose, onSubmit }
             onChange={(e) => setBody(e.target.value)}
           ></textarea>
         </div>
+
+        <Dropdown/>
         <Button onClick={handleSubmit} style={{ marginTop: '10px' }}>Whisper !</Button>
       </Box>
     </Modal>

@@ -11,10 +11,14 @@ import create from 'zustand';
 
 type TGlobalState = {
   accountAddress: string;
+  category: string;
   setAccountAddress: (address: string) => void;
+  setCategory: (category: string) => void;
 };
 
 export const useGlobalState = create<TGlobalState>(set => ({
   accountAddress: "",
+  category: "📺 Misc",
   setAccountAddress: (address: string): void => set(() => ({ accountAddress: address })),
+  setCategory:  (category: string): void => set(() => ({ category: category })),
 }));
