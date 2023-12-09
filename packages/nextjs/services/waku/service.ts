@@ -9,7 +9,7 @@ export const sendMessageToThread = async (
   threadId: string,
   message: string,
   userTypedSignature: string,
-): Promise<void> => {
+) => {
   // const lightNode = await getLightNode();
   console.log('Sender : Light Node started');
   // Choose a content topic
@@ -32,11 +32,8 @@ export const sendMessageToThread = async (
     payload: serialisedMessage,
   });
 
-  if(sentMessage?.errors && sentMessage.errors.length>0){
-    notification.error(`Failed creating vote: ${sentMessage.errors[0]}`)
-  } 
-
   console.log('Message sent', sentMessage);
+  return sentMessage;
 };
 
 export async function createVote(node: LightNode, data: Partial<Vote>) {
@@ -56,7 +53,7 @@ export async function createVote(node: LightNode, data: Partial<Vote>) {
 }
 
 export const loadThread = async (lightNode: LightNode, threadId: string) => {
-  const contentTopic = threadId;
+  const contentTopic = genThreadTopic(threadId);
   const decoder = createDecoder(contentTopic);
 
   console.log('querying the store');

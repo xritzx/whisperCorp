@@ -18,6 +18,7 @@ import { BlockieAvatar } from '~~/components/scaffold-eth';
 import { useGlobalState } from '~~/services/store/store';
 import { signTypedData } from '@wagmi/core';
 import { domain, types } from '~~/utils/signMessage';
+import { notification } from '~~/utils/scaffold-eth';
 
 const PostDetail = () => {
   const router = useRouter();
@@ -66,8 +67,12 @@ const PostDetail = () => {
       postId: cid
     }
     const userTypedSignature = await signTypedData({ domain, types, primaryType: 'Thread', message: signPayload });
-    await sendMessageToThread(node, cid, inputValue, userTypedSignature);
-    setInputValue('');
+    const sentMessage = await sendMessageToThread(node, cid, inputValue, userTypedSignature);
+    if(sentMessage?.errors && sentMessage.errors.length>0){
+      notification.error(`Failed creating comment: ${sentMessage.errors[0]}`)
+    } else {
+      setInputValue('');
+    }
   };
 
   if (isLoading) {
