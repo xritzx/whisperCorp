@@ -28,9 +28,12 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 
 import DirectionsIcon from '@mui/icons-material/Directions';
+import { BlockieAvatar } from '~~/components/scaffold-eth';
+import { maskHexAddress } from '~~/utils/hashing';
 
 const Feed = () => {
   const { node, isLoading } = useLightNode();
+  const [ pageLoading, setPageLoading ] = useState(true);
   const { accountAddress, category } = useGlobalState();
   const [uploads, setUploads] = useState<any>({});
   const [date] = useState(format(new Date(), 'yyyy-MM-dd'));
@@ -61,7 +64,7 @@ const Feed = () => {
       postId: cid,
       title: title,
       vote: 'UpVote',
-      disclaimer: 'This is a disclaimer which needs to be defined',
+      disclaimer: 'You are signing the vote, but your data is not stored with us',
     };
     try {
       const userTypedSignature = await signTypedData({ domain, types, primaryType: 'Vote', message: voteData });
@@ -89,7 +92,7 @@ const Feed = () => {
       postId: cid,
       title: title,
       vote: 'DownVote',
-      disclaimer: 'This is a disclaimer which needs to be defined',
+      disclaimer: 'You are signing the vote, but your data is not stored with use',
     };
 
     try {
@@ -129,14 +132,15 @@ const Feed = () => {
       notification.error('Please sign in to whisperCorp ');
       return;
     }
+
     const postData = { 
       title,
       body,
       date,
       disclaimer: 'Your signature would be taken in the post, no data is stored',
-      category
+      category,
+      maskedAddress: maskHexAddress(accountAddress, 2, 15)
     };
-
     if (title.length === 0 || body.length === 0) {
       alert('Please fill out both the fields');
       return;
@@ -149,16 +153,11 @@ const Feed = () => {
     try {
       const userTypedSignature = await signTypedData({ domain, types, primaryType: 'Posts', message: postData });
       console.log('userTypedSignature', userTypedSignature);
+      const hash = await upload({...postData, sign: userTypedSignature});
+      console.log('use this hash to start a thread', hash);
     } catch (e: any) {
       notification.error(e.message);
     }
-
-    const hash = await upload(postData);
-    console.log('use this hash to start a thread', hash);
-
-    await new Promise(resolve => {
-      setTimeout(resolve, 3000);
-    });
 
     await fetchUploads();
   };
@@ -181,6 +180,7 @@ const Feed = () => {
     });
     await fetchVotes(messageMap);
     setUploads(messageMap);
+    setPageLoading(false);
     // console.log(messageMap);
   };
 
@@ -190,7 +190,7 @@ const Feed = () => {
     subscribeToWakuVotes(node as LightNode, onlikesData);
   }, [isLoading]);
 
-  if (isLoading) {
+  if (isLoading || pageLoading) {
     return (
       <div className={commonStyles['loader-parent']}>
         <div className={commonStyles.loader}></div>
@@ -229,10 +229,11 @@ const Feed = () => {
             className="relative flex w-full max-w-[35rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none">
             <div
               className="relative flex gap-4 pt-0 pb-1 mx-0 mt-4 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
-              <img
-                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
-                alt="block"
-                className="relative inline-block h-[60px] w-[60px] !rounded-full  object-cover object-center" />
+               <BlockieAvatar 
+                address={data.maskedAddress? data.maskedAddress: '0'} 
+                // size={20} 
+                classN={"relative inline-block h-[60px] w-[60px] !rounded-full  object-cover object-center"}
+              />
               <div className="flex w-full flex-col gap-0.5">
                 <div className="flex items-center justify-between">
                   <h5

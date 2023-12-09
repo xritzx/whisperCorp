@@ -11,7 +11,9 @@ export const types = {
     { name: 'title', type: 'string' },
     { name: 'body', type: 'string' },
     { name: 'date', type: 'string' },
+    { name: 'category', type: 'string' },
     { name: 'disclaimer', type: 'string' },
+    { name: 'maskedAddress', type: 'string' }
   ],
   Thread: [
     { name: 'address', type: 'string' },
