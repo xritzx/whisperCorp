@@ -203,7 +203,6 @@ const Feed = () => {
 
   return (
     <>
-
       {!provedAccess?
           <Box className={styles['vc-check-page']}>
             <Box>
@@ -304,7 +303,7 @@ const Feed = () => {
         ))}
       </Box>)}
     </>
-  );
+  )
 };
 
 export default Feed;
