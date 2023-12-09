@@ -19,7 +19,7 @@ import { notification } from '~~/utils/scaffold-eth';
 import { createVote, loadVotes, subscribeToWakuVotes, } from '~~/services/waku/service';
 import { domain, types } from '~~/utils/signMessage';
 import CreatePostModal from '~~/components/modal';
-import { Card, Typography } from '@mui/material';
+import { Button, Card, CardActions, CardContent, Grid, Typography, styled } from '@mui/material';
 
 
 import Paper from '@mui/material/Paper';
@@ -38,9 +38,9 @@ const Feed = () => {
   const { accountAddress, category, companyName } = useGlobalState();
   const [uploads, setUploads] = useState<any>({});
   const [date] = useState(format(new Date(), 'yyyy-MM-dd'));
-  const [ provedAccess, setProvedAccess ] = useState(false);
+  const [provedAccess, setProvedAccess] = useState(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const serverURL = process.env.NEXT_PUBLIC_REACT_APP_VERIFICATION_SERVER_LOCAL_HOST_URL as string;  
+  const serverURL = process.env.NEXT_PUBLIC_REACT_APP_VERIFICATION_SERVER_LOCAL_HOST_URL as string;
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -203,105 +203,122 @@ const Feed = () => {
 
   return (
     <>
-      {!provedAccess?
-          <Box className={styles['vc-check-page']}>
-            <Box>
-              <Card
-                style={{
-                  border: '2px solid #805AD5',
-                }}
-              >
-                  <p>
-                    Please verify you corporate ID with your Polygon ID issued by your corporation
-                  </p>
-  
-                  <PolygonIDVerifier 
-                    credentialType={"VerifyCompanyId"} 
-                    issuerOrHowToLink={
-                      'https://oceans404.notion.site/How-to-get-a-Verifiable-Credential-f3d34e7c98ec4147b6b2fae79066c4f6?pvs=4'
-                    }
-                    onVerificationResult={setProvedAccess} 
-                    serverUrl={serverURL} 
-                  />
-
-              </Card>
-            </Box>
-          </Box>
-      :(<Box className={commonStyles['page-container']}>
-
-        <div className="p-4">
-
-          <Paper
-            onClick={openModal}
-            component="form"
-            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 570 }}
-          >
-
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="🤫 start whispering now"
-              inputProps={{ 'aria-label': 'search google maps' }}
+      {!provedAccess ?
+      <div style={{margin: '25%'}}>
+      <Card sx={{ maxWidth: 600 }}>
+        <CardContent >
+          <Typography variant='h3'  gutterBottom>
+            A Simple Material UI Card
+          </Typography>
+          <Typography variant="h4" component="div">
+           Heading
+          </Typography>
+          <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            describes the heading
+          </Typography>
+          <Typography variant="body1">
+          
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small">
+            <PolygonIDVerifier
+              credentialType={"VerifyCompanyId"}
+              issuerOrHowToLink={
+                'https://oceans404.notion.site/How-to-get-a-Verifiable-Credential-f3d34e7c98ec4147b6b2fae79066c4f6?pvs=4'
+              }
+              onVerificationResult={setProvedAccess}
+              serverUrl={serverURL}
             />
+          </Button>
+        </CardActions>
+      </Card>
+      </div>
+      // <Box className={commonStyles['page-container']}>
+      //   <Grid container alignItems={'center'} spacing={2}>
+      //     <Grid item xs={8} alignItems={'center'}>
+      //       <Item>Please verify you corporate ID with your Polygon ID issued by your corporation</Item>
+      //     </Grid>
+      //     <Grid item xs={8}>
+            
+      //     </Grid>
+      //   </Grid>
+        // </Box>
+        : (<Box className={commonStyles['page-container']}>
 
-            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
-              <DirectionsIcon />
-            </IconButton>
-          </Paper>
-          {modalOpen && (<CreatePostModal isOpen={modalOpen} onClose={closeModal} onSubmit={handleSubmit} />)}
-        </div>
+          <div className="p-4">
 
-        {Object.values(uploads).map((data: any) => (
-          <div key={data.cId}
-            className="relative flex w-full max-w-[35rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none">
-            <div
-              className="relative flex gap-4 pt-0 pb-1 mx-0 mt-4 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
-              <BlockieAvatar
-                address={data.maskedAddress ? data.maskedAddress : '0'}
-                // size={20} 
-                classN={"relative inline-block h-[60px] w-[60px] !rounded-full  object-cover object-center"} size={0} />
-              <div className="flex w-full flex-col gap-0.5">
-                <div className="flex items-center justify-between">
-                  <h5
-                    className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                    {data.category ? data.category : "📺 Misc"}
-                  </h5>
-                </div>
-                <p className="block font-sans text-base antialiased font-light leading-relaxed text-blue-gray-900" style={{ margin: "1px" }}>
-                  {data.companyName ? '@ ' + data.companyName : "@ Unknown"}
-                </p>
-              </div>
-              <KeyboardArrowUpIcon style={{ color: '#008800' }} onClick={() => upVote(data.cid, data.title)} />
-              <KeyboardArrowDownIcon style={{ color: '#ff0000' }} onClick={() => downVote(data.cid, data.title)} />
+            <Paper
+              onClick={openModal}
+              component="form"
+              sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 570 }}
+            >
 
-              <Typography
-                className="items-center justify-between"
-                sx={{
-                  color: data.votes < 0 ? 'red' : 'green',
-                  fontWeight: 'bold',
-                  justifyContent: 'center',
-                }}
-              >
-                {data.votes}
-              </Typography>
-            </div>
-            <Link href={`/posts/${data.cid}`} passHref key={data.cid} className={styles.link}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="🤫 start whispering now"
+                inputProps={{ 'aria-label': 'search google maps' }}
+              />
 
-              <div className="p-0 mb-4">
-                <h5
-                  className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900 mt-1">
-                  {data.title}
-                </h5>
-
-                <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit mt-1">
-                  {data.body}
-                </p>
-
-              </div>
-            </Link>
+              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+              <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
+                <DirectionsIcon />
+              </IconButton>
+            </Paper>
+            {modalOpen && (<CreatePostModal isOpen={modalOpen} onClose={closeModal} onSubmit={handleSubmit} />)}
           </div>
-        ))}
-      </Box>)}
+
+          {Object.values(uploads).map((data: any) => (
+            <div key={data.cId}
+              className="relative flex w-full max-w-[35rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none">
+              <div
+                className="relative flex gap-4 pt-0 pb-1 mx-0 mt-4 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
+                <BlockieAvatar
+                  address={data.maskedAddress ? data.maskedAddress : '0'}
+                  // size={20} 
+                  classN={"relative inline-block h-[60px] w-[60px] !rounded-full  object-cover object-center"} size={0} />
+                <div className="flex w-full flex-col gap-0.5">
+                  <div className="flex items-center justify-between">
+                    <h5
+                      className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                      {data.category ? data.category : "📺 Misc"}
+                    </h5>
+                  </div>
+                  <p className="block font-sans text-base antialiased font-light leading-relaxed text-blue-gray-900" style={{ margin: "1px" }}>
+                    {data.companyName ? '@ ' + data.companyName : "@ Unknown"}
+                  </p>
+                </div>
+                <KeyboardArrowUpIcon style={{ color: '#008800' }} onClick={() => upVote(data.cid, data.title)} />
+                <KeyboardArrowDownIcon style={{ color: '#ff0000' }} onClick={() => downVote(data.cid, data.title)} />
+
+                <Typography
+                  className="items-center justify-between"
+                  sx={{
+                    color: data.votes < 0 ? 'red' : 'green',
+                    fontWeight: 'bold',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {data.votes}
+                </Typography>
+              </div>
+              <Link href={`/posts/${data.cid}`} passHref key={data.cid} className={styles.link}>
+
+                <div className="p-0 mb-4">
+                  <h5
+                    className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900 mt-1">
+                    {data.title}
+                  </h5>
+
+                  <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit mt-1">
+                    {data.body}
+                  </p>
+
+                </div>
+              </Link>
+            </div>
+          ))}
+        </Box>)}
     </>
   )
 };

@@ -75,7 +75,7 @@ async function getAuthQr(req, res) {
     socketMessage('getAuthQr', STATUS.IN_PROGRESS, sessionId)
   );
 
-  const uri = `${process.env.HOSTED_SERVER_URL}${apiPath.handleVerification}?sessionId=${sessionId}`;
+  const uri = `${process.env.SERVER_URL}${apiPath.handleVerification}?sessionId=${sessionId}`;
   // Generate request for basic authentication
   // https://0xpolygonid.github.io/tutorials/verifier/verification-library/request-api-guide/#createauthorizationrequest
   const request = auth.createAuthorizationRequest(

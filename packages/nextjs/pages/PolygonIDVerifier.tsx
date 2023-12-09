@@ -38,7 +38,7 @@ function PolygonIDVerifier({
   const [isHandlingVerification, setIsHandlingVerification] = useState(false);
   const [verificationCheckComplete, setVerificationCheckComplete] = useState(false);
   const [verificationMessage, setVerfificationMessage] = useState('');
-  const [socketEvents, setSocketEvents] = useState([]);;
+  const [socketEvents, setSocketEvents] = useState([]);  
 
   const getQrCodeApi = (sessionId: string) => serverUrl + `/api/get-auth-qr?sessionId=${sessionId}`;
   const socket = io(serverUrl);   
@@ -107,7 +107,7 @@ function PolygonIDVerifier({
     <div>
       {sessionId ? (
         <Button colorScheme="purple" onClick={onOpen} margin={4}>
-          Prove access rights
+          Prove your company
         </Button>
       ) : (
         <Spinner />

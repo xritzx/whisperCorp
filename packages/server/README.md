@@ -29,7 +29,7 @@ cp .env.sample .env;
 
 - Update the `RPC_URL_MUMBAI` to a Polygon Mumbai RPC endpoint. I used [Alchemy's](https://alchemy.com/?r=zU2MTQwNTU5Mzc2M)
 - Optionally update the `VERIFIER_DID` to your DID
-- Don't change `HOSTED_SERVER_URL` or `FRONTEND_URL` yet
+- Don't change `SERVER_URL` or `FRONTEND_URL` yet
 
 #### 3. Run your server on port 8080
 
@@ -53,10 +53,10 @@ You'll see a forwarding address in the logs
 Forwarding  https://abc-your-forwarding-address-def.ngrok-free.app -> http://localhost:8080
 ```
 
-#### 5. Update the `HOSTED_SERVER_URL` field your .env file to your forwarding address
+#### 5. Update the `SERVER_URL` field your .env file to your forwarding address
 
 ```bash
-HOSTED_SERVER_URL="https://abc-your-forwarding-address-def.ngrok-free.app"
+SERVER_URL="https://abc-your-forwarding-address-def.ngrok-free.app"
 ```
 
 #### 6. Optionally customize your own proof request by changing the credentialSubject in [`proofRequest.js`](https://github.com/oceans404/vc-verifier/blob/main/proofRequest.js)
@@ -115,7 +115,7 @@ If all these are satisfied by the verifier, an authResponse with fields for did_
 
 You are currently running the server on localhost and forwarding to [ngrok](https://github.com/oceans404/vc-verifier/blob/main/.env.sample#L1) to exposse it to the internet.
 
-If you'd like to host the server, you can use something like [Render](https://render.com/), [documented by me here](https://github.com/oceans404/vc-verifier/blob/main/.env.sample#L1). Connect your repo, then make sure to add all your environment variables from .env. Update the HOSTED_SERVER_URL environment variable to match the server domain created by Render. Mine is https://vc-birthday-server.onrender.com
+If you'd like to host the server, you can use something like [Render](https://render.com/), [documented by me here](https://github.com/oceans404/vc-verifier/blob/main/.env.sample#L1). Connect your repo, then make sure to add all your environment variables from .env. Update the SERVER_URL environment variable to match the server domain created by Render. Mine is https://vc-birthday-server.onrender.com
 
 <img width="1265" alt="Screenshot 2023-06-06 at 11 11 06 AM" src="https://github.com/oceans404/vc-verifier/assets/91382964/dff0176b-1bb2-4c1f-b97c-7c2b50c03737">
 
