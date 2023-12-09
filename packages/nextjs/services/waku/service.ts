@@ -45,6 +45,7 @@ export async function createVote(node: LightNode, data: Partial<Vote>) {
     }),
   });
   console.log("Vote Sent:", pushedValue);
+  return pushedValue;
 }
 
 export const loadThread = async (lightNode: LightNode, threadId: string) => {
