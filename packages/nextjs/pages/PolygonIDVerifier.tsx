@@ -17,6 +17,8 @@ import {
 import QRCode from 'react-qr-code';
 import { io } from 'socket.io-client';
 import { Typography } from '@mui/material';
+import { useGlobalState } from '~~/services/store/store';
+import { useSessionStorage } from 'usehooks-ts';
 
 const linkDownloadPolygonIDWalletApp = 'https://0xpolygonid.github.io/tutorials/wallet/wallet-overview/#quick-start';
 
@@ -40,19 +42,23 @@ function PolygonIDVerifier({
   const [verificationCheckComplete, setVerificationCheckComplete] = useState(false);
   const [verificationMessage, setVerfificationMessage] = useState('');
   const [socketEvents, setSocketEvents] = useState([]);
+  const { setCompanyName } = useGlobalState();
+  const [company, setCompany] = useSessionStorage('company', "");
 
   const getQrCodeApi = (sessionId: string) => serverUrl + `/api/get-auth-qr?sessionId=${sessionId}`;
   const socket = io(serverUrl);
-  console.log(socket, serverUrl);
 
-
-  useEffect(() => {
-    socket.on('connect', () => {
-      setSessionId(socket.id);
-      socket.on(socket.id, arg => {
-        setSocketEvents(socketEvents => [...socketEvents, arg]);
+  useEffect(() => {    
+    if(company != ""){
+      setCompanyName(company);
+    } else {
+      socket.on('connect', () => {
+        setSessionId(socket.id);
+        socket.on(socket.id, arg => {
+          setSocketEvents(socketEvents => [...socketEvents, arg]);
+        });
       });
-    });
+    }
   }, []);
 
   useEffect(() => {
@@ -78,6 +84,13 @@ function PolygonIDVerifier({
           setIsHandlingVerification(false);
           setVerificationCheckComplete(true);
           if (currentSocketEvent.status === 'DONE') {
+            const scope = currentSocketEvent.data.body.scope;
+            if(scope && scope.length) {
+              const companyName = scope[0].vp.verifiableCredential.credentialSubject.CompanyName;
+              setCompanyName(companyName);
+              setCompany(companyName);
+            }
+            console.log(currentSocketEvent.data.body.scope[0].vp.verifiableCredential.credentialSubject.CompanyName);
             setVerfificationMessage('✅ Verified proof');
             setTimeout(() => {
               reportVerificationResult(true);

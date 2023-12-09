@@ -203,7 +203,7 @@ const Feed = () => {
 
   return (
     <>
-      {!provedAccess ?
+      {(!provedAccess && companyName=="") ?
         <Box
           display="flex"
           justifyContent="center"

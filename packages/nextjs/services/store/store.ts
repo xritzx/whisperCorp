@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 
 /**
  * Zustand Store
@@ -21,7 +21,7 @@ type TGlobalState = {
 export const useGlobalState = create<TGlobalState>(set => ({
   accountAddress: "",
   category: "📺 Misc",
-  companyName: "Unknown",
+  companyName: "",
   setAccountAddress: (address: string): void => set(() => ({ accountAddress: address })),
   setCategory: (category: string): void => set(() => ({ category: category })),
   setCompanyName: (companyName: string): void => set(() => ({ companyName: companyName}))
