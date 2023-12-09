@@ -52,17 +52,10 @@ export async function createVote(node: LightNode, data: Partial<Vote>) {
   return pushedValue;
 }
 
-export const loadThread = async (lightNode: LightNode, threadId: string) => {
+export const loadThread = async (lightNode: LightNode, threadId: string, cb: any) => {
   const contentTopic = genThreadTopic(threadId);
   const decoder = createDecoder(contentTopic);
-
-  console.log('querying the store');
-  const storeQuery = lightNode.store.queryGenerator([decoder], {
-    pageDirection: PageDirection.BACKWARD,
-  });
-  console.log('store query created');
-
-  return storeQuery;
+  await lightNode.store.queryWithOrderedCallback([decoder], cb);
 };
 
 export const loadVotes = async (lightNode: LightNode) => {

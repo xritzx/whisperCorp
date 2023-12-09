@@ -31,17 +31,11 @@ const PostDetail = () => {
 
   const storeQueryFunction = async (node: LightNode, cid: string) => {
     const messagesArray: any[] = [];
-    const storeQuery = await loadThread(node as LightNode, cid);
-    for await (const messagesPromises of storeQuery) {
-      await Promise.all(
-        messagesPromises.map(async (p: any) => {
-          const msg = await p;
-          const decodedMessage = decodeThreadMessage(msg);
-          console.log('decodedMessage', decodedMessage);
-          messagesArray.push(decodedMessage);
-        }),
-      );
-    }
+    await loadThread(node as LightNode, cid, (msg: any)=>{
+      const decodedMessage = decodeThreadMessage(msg);
+      console.log('decodedMessage', decodedMessage);
+      messagesArray.push(decodedMessage);
+    });
     setThreadMessages(messagesArray);
   };
 
