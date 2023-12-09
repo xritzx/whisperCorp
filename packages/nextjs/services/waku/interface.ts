@@ -1,3 +1,3 @@
 // /{application-name}/{version}/{content-topic-name}/{encoding}
-export const VoteTopic = '/web3blind/store/votes';
-export const genThreadTopic = (id: string) => id;
+export const VoteTopic = '/whisperCorp/1/votes/json';
+export const genThreadTopic = (id: string) => `/whisperCorp/1/thread:${id}/json`;
