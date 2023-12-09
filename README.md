@@ -1,80 +1,84 @@
-# 🏗 whisperCorp 2
+# BI\*\*H YOUR COMPANY!
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
+## Overview
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+This project offers a decentralized, anonymous forum for discussing workspace issues. Leveraging advanced technologies, it provides a safe environment for users to share experiences related to their workspace without compromising their privacy or identity.
 
-⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi, and Typescript.
+## Key Features
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+- **Decentralized Data Storage**: Powered by IPFS and Lighthouse for secure, robust data management.
+- **Private Communication**: Uses the Waku protocol for encrypted, decentralized interactions.
+- **Anonymous Verification**: Integrates Polygon ID for selective credential disclosure, maintaining user anonymity.
+- **Data Integrity**: Employs zero-knowledge proofs for securely handling company names in user posts.
+- **Open Discussion Platform**: Facilitates candid, anonymous discussions on workplace matters like salaries, whistleblowing, etc.
+- **Censorship-Resistant Environment**: Ensures a secure platform for unrestricted discussions.
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/1171422a-0ce4-4203-bcd4-d2d1941d198b)
+## Installation Guidelines
 
-## Requirements
+- Clone the repository
 
-Before you begin, you need to install the following tools:
+  ```shell
+  git clone https://github.com/xritzx/whisperCorp.git
+  ```
 
-- [Node (v18 LTS)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
+- Install dependencies
 
-## Quickstart
+  ```shell
+  yarn
+  ```
 
-To get started with whisperCorp 2, follow the steps below:
+- Add environment variables
 
-1. Clone this repo & install dependencies
+  - Create a `.env` file in the `packages/nextjs` directory and fill the required fields
 
-```
-git clone https://github.com/scaffold-eth/scaffold-eth-2.git
-cd scaffold-eth-2
-yarn install
-```
+    ```shell
+    cp packages/nextjs/.env.example packages/nextjs/.env
+    ```
 
-2. Run a local network in the first terminal:
+  - Create a `.env` file in the `packages/server` directory and fill the required fields
 
-```
-yarn chain
-```
+    ```shell
+    cp packages/server/.env.example packages/server/.env
+    ```
 
-This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`.
+- Run the verifier backend server. You will also need to install ngrok for this. See [this](https://ngrok.com/download) for more information. After installing ngrok, run the following command to start the server.
 
-3. On a second terminal, deploy the test contract:
+  ```shell
+  ngrok http 8080
+  ```
 
-```
-yarn deploy
-```
+  Add the ngrok URL to the `HOSTED_SERVER_URL` field in the `.env` file in the `packages/server` directory.
+  Run the following command to start the server.
 
-This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network. You can also customize the deploy script.
+  ```shell
+  yarn start:server
+  ```
 
-4. On a third terminal, start your NextJS app:
+- Run the frontend server. You will also need to install the Polygon ID mobile app for this. See [this](https://devs.polygonid.com/docs/wallet/wallet-sdk/polygonid-app/) for more information.
 
-```
-yarn start
-```
+  ```shell
+  yarn start:next
+  ```
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+## Contributing
 
-Run smart contract test with `yarn hardhat:test`
+This project, initiated at [ETHIndia23 hackathon](https://ethindia.co/), is open for contributions. See our contributing guidelines for more information.
 
-- Edit your smart contract `YourContract.sol` in `packages/hardhat/contracts`
-- Edit your frontend in `packages/nextjs/pages`
-- Edit your deployment scripts in `packages/hardhat/deploy`
+## License
 
-## Documentation
+This project is released under the [MIT License](LICENSE.md), permitting free use while providing necessary legal protections.
 
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with whisperCorp 2.
+## Acknowledgements and References
 
-To know more about its features, check out our [website](https://scaffoldeth.io).
+[<img src="./assets/black-waku-logo-with-name.png" width="200" height="100">](https://waku.org/)
+[<img src="./assets/63a1add7c366de030f972bdb_ID-Launch-Creative-with-tagline.webp" width="200" height="100">](https://polygonid.com/)
+[<img src="./assets/G-9dkMwk_400x400.jpg" width="200" height="200">](https://www.lighthouse.storage/)
+[<img src="./assets/download.png" width="200" height="200">](https://ipfs.tech/)
 
-## Contributing to whisperCorp 2
+## Contributors
 
-We welcome contributions to whisperCorp 2!
+Reach out to us for inquiries:
 
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to whisperCorp 2.
+- [Debjit Datta](https://github.com/debjitdbb/)
+- [Ritankar Paul](https://github.com/xritzx/)
+- [Sumit Guha](https://github.com/sumit03guha)
