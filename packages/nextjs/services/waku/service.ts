@@ -1,5 +1,5 @@
 import { LightNode, createEncoder, PageDirection, createDecoder } from '@waku/sdk';
-import { VoteTopic } from '~~/services/waku/interface';
+import { VoteTopic, genThreadTopic } from '~~/services/waku/interface';
 import { Thread } from '~~/services/waku/proto/thread';
 import { Vote } from '~~/services/waku/proto/vote';
 import { notification } from '~~/utils/scaffold-eth';
@@ -13,11 +13,11 @@ export const sendMessageToThread = async (
   // const lightNode = await getLightNode();
   console.log('Sender : Light Node started');
   // Choose a content topic
-  const contentTopic = threadId;
-
+  const contentTopic = genThreadTopic(threadId);
+  console.log(contentTopic);
+  
   const encoder = createEncoder({
     contentTopic: contentTopic, // message content topic
-    // ephemeral: false, // allows messages to be persisted or not
   });
 
   // Serialise the message using Protobuf
@@ -32,6 +32,10 @@ export const sendMessageToThread = async (
     payload: serialisedMessage,
   });
 
+  if(sentMessage?.errors && sentMessage.errors.length>0){
+    notification.error(`Failed creating vote: ${sentMessage.errors[0]}`)
+  } 
+
   console.log('Message sent', sentMessage);
 };
 
@@ -45,6 +49,9 @@ export async function createVote(node: LightNode, data: Partial<Vote>) {
     }),
   });
   console.log("Vote Sent:", pushedValue);
+  if(pushedValue.errors && pushedValue.errors.length>0){
+    notification.error(`Failed creating vote: ${pushedValue.errors[0]}`)
+  } 
   return pushedValue;
 }
 
