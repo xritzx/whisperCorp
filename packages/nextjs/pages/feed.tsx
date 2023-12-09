@@ -19,7 +19,7 @@ import { notification } from '~~/utils/scaffold-eth';
 import { createVote, loadVotes, subscribeToWakuVotes, } from '~~/services/waku/service';
 import { domain, types } from '~~/utils/signMessage';
 import CreatePostModal from '~~/components/modal';
-import { Button, Card, CardActions, CardContent, Grid, Typography, styled } from '@mui/material';
+import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography, styled } from '@mui/material';
 
 
 import Paper from '@mui/material/Paper';
@@ -204,46 +204,49 @@ const Feed = () => {
   return (
     <>
       {!provedAccess ?
-      <div style={{margin: '25%'}}>
-      <Card sx={{ maxWidth: 600 }}>
-        <CardContent >
-          <Typography variant='h3'  gutterBottom>
-            A Simple Material UI Card
-          </Typography>
-          <Typography variant="h4" component="div">
-           Heading
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            describes the heading
-          </Typography>
-          <Typography variant="body1">
-          
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">
-            <PolygonIDVerifier
-              credentialType={"VerifyCompanyId"}
-              issuerOrHowToLink={
-                'https://oceans404.notion.site/How-to-get-a-Verifiable-Credential-f3d34e7c98ec4147b6b2fae79066c4f6?pvs=4'
-              }
-              onVerificationResult={setProvedAccess}
-              serverUrl={serverURL}
-            />
-          </Button>
-        </CardActions>
-      </Card>
-      </div>
-      // <Box className={commonStyles['page-container']}>
-      //   <Grid container alignItems={'center'} spacing={2}>
-      //     <Grid item xs={8} alignItems={'center'}>
-      //       <Item>Please verify you corporate ID with your Polygon ID issued by your corporation</Item>
-      //     </Grid>
-      //     <Grid item xs={8}>
-            
-      //     </Grid>
-      //   </Grid>
-        // </Box>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          minHeight="100vh"
+          sx={{ margin: '-8px' }}
+        >
+        <Card sx={{ 
+          maxWidth: 600,
+          borderRadius: '23px',
+          boxShadow: '0 0 10px 2px #7B3FE4, 0 0 20px 2px #7B3FE4', // Neon-like purple box shadow
+          transition: 'box-shadow 0.3s ease-in-out',
+          '&:hover': {
+            boxShadow: '0 0 20px 5px #7B3FE4, 0 0 30px 5px #7B3FE4' // Intensify shadow on hover
+        }
+      }}>
+          <CardMedia
+            component="img"
+            height="140"
+            image="polygonID.png"
+            alt="Your Image"
+            sx={{ objectFit: 'contain', width: 'auto', maxWidth: '100%', margin: '0 auto' }} // Center the image
+          />
+          <CardContent>
+            <Typography variant="h5" component="div" textAlign={'center'}>
+              Verify your Employement
+            </Typography>
+            <Typography sx={{ mb: 1.5, fontSize: '15px' }} color="text.secondary" textAlign={'center'}>
+              Please use polygon ID Wallet with the company issued credentials
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button fullWidth sx={{color: '#7B3FE4', fontStyle:'bold'}}>
+              <PolygonIDVerifier
+                credentialType={"VerifyCompanyId"}
+                issuerOrHowToLink={'https://oceans404.notion.site/How-to-get-a-Verifiable-Credential-f3d34e7c98ec4147b6b2fae79066c4f6?pvs=4'}
+                onVerificationResult={setProvedAccess}
+                serverUrl={serverURL}
+              />
+            </Button>
+          </CardActions>
+        </Card>
+      </Box>
         : (<Box className={commonStyles['page-container']}>
 
           <div className="p-4">

@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 import QRCode from 'react-qr-code';
 import { io } from 'socket.io-client';
+import { Typography } from '@mui/material';
 
 const linkDownloadPolygonIDWalletApp = 'https://0xpolygonid.github.io/tutorials/wallet/wallet-overview/#quick-start';
 
@@ -106,8 +107,8 @@ function PolygonIDVerifier({
   return (
     <div>
       {sessionId ? (
-        <Button colorScheme="purple" onClick={onOpen} margin={4}>
-          Prove your company
+        <Button colorScheme="purple" onClick={onOpen} textAlign={'center'}>
+          <Typography textAlign={'center'}>Prove employement</Typography>
         </Button>
       ) : (
         <Spinner />
