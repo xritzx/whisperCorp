@@ -38,7 +38,7 @@ const Feed = () => {
   const { accountAddress, category, companyName } = useGlobalState();
   const [uploads, setUploads] = useState<any>({});
   const [date] = useState(format(new Date(), 'yyyy-MM-dd'));
-  const [provedAccess, setProvedAccess] = useState(false);
+  const [provedAccess, setProvedAccess] = useState(true);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const serverURL = process.env.NEXT_PUBLIC_REACT_APP_VERIFICATION_SERVER_LOCAL_HOST_URL as string;
 
