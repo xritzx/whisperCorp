@@ -30,10 +30,11 @@ import IconButton from '@mui/material/IconButton';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import { BlockieAvatar } from '~~/components/scaffold-eth';
 import { maskHexAddress } from '~~/utils/hashing';
+import { log } from 'console';
 
 const Feed = () => {
   const { node, isLoading } = useLightNode();
-  const [ pageLoading, setPageLoading ] = useState(true);
+  const [pageLoading, setPageLoading] = useState(true);
   const { accountAddress, category } = useGlobalState();
   const [uploads, setUploads] = useState<any>({});
   const [date] = useState(format(new Date(), 'yyyy-MM-dd'));
@@ -133,13 +134,14 @@ const Feed = () => {
       return;
     }
 
-    const postData = { 
+    const postData = {
       title,
       body,
       date,
       disclaimer: 'Your signature would be taken in the post, no data is stored',
       category,
-      maskedAddress: maskHexAddress(accountAddress, 2, 15)
+      maskedAddress: maskHexAddress(accountAddress, 2, 15),
+      companyName: 'Airtel' // todo fetch company name from PolygonId
     };
     if (title.length === 0 || body.length === 0) {
       alert('Please fill out both the fields');
@@ -153,7 +155,7 @@ const Feed = () => {
     try {
       const userTypedSignature = await signTypedData({ domain, types, primaryType: 'Posts', message: postData });
       console.log('userTypedSignature', userTypedSignature);
-      const hash = await upload({...postData, sign: userTypedSignature});
+      const hash = await upload({ ...postData, sign: userTypedSignature });
       console.log('use this hash to start a thread', hash);
     } catch (e: any) {
       notification.error(e.message);
@@ -229,19 +231,19 @@ const Feed = () => {
             className="relative flex w-full max-w-[35rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none">
             <div
               className="relative flex gap-4 pt-0 pb-1 mx-0 mt-4 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
-               <BlockieAvatar 
+              <BlockieAvatar
                 address={data.maskedAddress ? data.maskedAddress : '0'}
                 // size={20} 
-                classN={"relative inline-block h-[60px] w-[60px] !rounded-full  object-cover object-center"} size={0}              />
+                classN={"relative inline-block h-[60px] w-[60px] !rounded-full  object-cover object-center"} size={0} />
               <div className="flex w-full flex-col gap-0.5">
                 <div className="flex items-center justify-between">
                   <h5
                     className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                    {data.category? data.category: "📺 Misc"}
+                    {data.category ? data.category : "📺 Misc"}
                   </h5>
                 </div>
                 <p className="block font-sans text-base antialiased font-light leading-relaxed text-blue-gray-900" style={{ margin: "1px" }}>
-                  @ Google
+                  {data.companyName ? '@ ' + data.companyName : "@ Unknown"}
                 </p>
               </div>
               <KeyboardArrowUpIcon style={{ color: '#008800' }} onClick={() => upVote(data.cid, data.title)} />
