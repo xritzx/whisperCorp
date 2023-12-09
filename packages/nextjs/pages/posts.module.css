@@ -1,0 +1,22 @@
+.mb10 {
+  margin-bottom: 10px;
+}
+
+.posts-form {
+  width: 100%;
+}
+
+.card-parent {
+  margin-top: 10px;
+}
+
+.link {
+  width: 100%;
+}
+
+.vc-check-page {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  min-height: 100vh;
+}
