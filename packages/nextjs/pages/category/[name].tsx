@@ -2,9 +2,9 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import styles from './feed.module.css';
+import styles from '../feed.module.css';
 import Link from 'next/link';
-import commonStyles from './common.module.css';
+import commonStyles from '../common.module.css';
 import Box from '@mui/system/Box';
 import { signTypedData } from '@wagmi/core';
 import { LightNode } from '@waku/sdk';
@@ -30,10 +30,13 @@ import IconButton from '@mui/material/IconButton';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import { BlockieAvatar } from '~~/components/scaffold-eth';
 import { maskHexAddress } from '~~/utils/hashing';
-import PolygonIDVerifier from './PolygonIDVerifier';
+import PolygonIDVerifier from '../PolygonIDVerifier';
+import { useRouter } from 'next/router';
 
-const Feed = () => {
+const Posts = () => {
   const { node, isLoading } = useLightNode();
+  const router = useRouter();
+  const name = router.query.name as string;
   const [pageLoading, setPageLoading] = useState(true);
   const { accountAddress, category, companyName } = useGlobalState();
   const [uploads, setUploads] = useState<any>({});
@@ -179,12 +182,13 @@ const Feed = () => {
     const uploadsData = await getUploads();
     const contentsWithCid = await Promise.all(
       uploadsData.map(async data => {
-        const content = await getContents(data.cid);
+        const content = await getContents(data.cid) as any;
         return { cid: data.cid, content };
-      }),
+      })
     );
     const uploadsAndContent = contentsWithCid
       .map(({ cid, content }) => ({ cid, ...JSON.parse(content as any) }))
+      .filter((content: any) => (content.category as string).indexOf(name.split(" ")[1])>-1)
       .map(data => ({ ...data, votes: 0 }));
     const messageMap: Record<string, any> = {};
     uploadsAndContent.forEach(x => {
@@ -281,7 +285,9 @@ const Feed = () => {
             </Paper>
             {modalOpen && (<CreatePostModal isOpen={modalOpen} onClose={closeModal} onSubmit={handleSubmit} />)}
           </div>
-
+        <Typography>
+            <h3>Latest Posts from {name}</h3>
+        </Typography>
           {Object.values(uploads).map((data: any) => (
             <div key={data.cId}
               className="relative flex w-full max-w-[35rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none">
@@ -293,13 +299,10 @@ const Feed = () => {
                   classN={"relative inline-block h-[60px] w-[60px] !rounded-full  object-cover object-center"} size={0} />
                 <div className="flex w-full flex-col gap-0.5">
                   <div className="flex items-center justify-between">
-                  <Link href={`/category/${data.category? data.category : "📺 Misc"}`} passHref key={data.cid} className={styles.link}>
-
                     <h5
                       className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                       {data.category ? data.category : "📺 Misc"}
                     </h5>
-                    </Link>
                   </div>
                   <p className="block font-sans text-base antialiased font-light leading-relaxed text-blue-gray-900" style={{ margin: "1px" }}>
                     {data.companyName ? '@ ' + data.companyName : "@ Unknown"}
@@ -340,4 +343,4 @@ const Feed = () => {
   )
 };
 
-export default Feed;
+export default Posts;
