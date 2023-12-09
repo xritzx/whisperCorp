@@ -1,5 +1,5 @@
 {
-  "name": "vc-verifier",
+  "name": "whispercorp-verifier-server",
   "version": "1.0.0",
   "description": "Polygon ID Verifiable Credential (VC) verifier",
   "main": "index.js",
