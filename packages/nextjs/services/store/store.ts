@@ -12,13 +12,17 @@ import create from 'zustand';
 type TGlobalState = {
   accountAddress: string;
   category: string;
+  companyName: string;
   setAccountAddress: (address: string) => void;
   setCategory: (category: string) => void;
+  setCompanyName: (companyName: string) => void;
 };
 
 export const useGlobalState = create<TGlobalState>(set => ({
   accountAddress: "",
   category: "📺 Misc",
+  companyName: "Unknown",
   setAccountAddress: (address: string): void => set(() => ({ accountAddress: address })),
-  setCategory:  (category: string): void => set(() => ({ category: category })),
+  setCategory: (category: string): void => set(() => ({ category: category })),
+  setCompanyName: (companyName: string): void => set(() => ({ companyName: companyName}))
 }));

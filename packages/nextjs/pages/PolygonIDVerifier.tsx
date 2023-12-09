@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
+
 import {
   Button,
   Center,
@@ -18,34 +19,35 @@ import { io } from 'socket.io-client';
 
 const linkDownloadPolygonIDWalletApp = 'https://0xpolygonid.github.io/tutorials/wallet/wallet-overview/#quick-start';
 
+type PolygonVerifierType = {
+  credentialType: string,
+  issuerOrHowToLink: string,
+  onVerificationResult: any,
+  serverUrl: string
+}
+ 
 function PolygonIDVerifier({
   credentialType,
   issuerOrHowToLink,
   onVerificationResult,
-  publicServerURL,
-  localServerURL,
-}) {
+  serverUrl,
+}: PolygonVerifierType) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [sessionId, setSessionId] = useState('');
   const [qrCodeData, setQrCodeData] = useState();
   const [isHandlingVerification, setIsHandlingVerification] = useState(false);
   const [verificationCheckComplete, setVerificationCheckComplete] = useState(false);
   const [verificationMessage, setVerfificationMessage] = useState('');
-  const [socketEvents, setSocketEvents] = useState([]);
+  const [socketEvents, setSocketEvents] = useState([]);;
 
-  // serverUrl is localServerURL if not running in prod
-  // Note: the verification callback will always come from the publicServerURL
-  const serverUrl = window.location.href.startsWith('https') ? publicServerURL : localServerURL;
-
-  const getQrCodeApi = sessionId => serverUrl + `/api/get-auth-qr?sessionId=${sessionId}`;
-
-  const socket = io(serverUrl);
-
+  const getQrCodeApi = (sessionId: string) => serverUrl + `/api/get-auth-qr?sessionId=${sessionId}`;
+  const socket = io(serverUrl);   
+  
   useEffect(() => {
     socket.on('connect', () => {
       setSessionId(socket.id);
-
-      // only watch this session's events
+      console.log("SIHfaoiuhfahgoiaeh");
+      
       socket.on(socket.id, arg => {
         setSocketEvents(socketEvents => [...socketEvents, arg]);
       });
@@ -69,7 +71,7 @@ function PolygonIDVerifier({
     if (socketEvents.length) {
       console.log('socketEvents', socketEvents);
 
-      const currentSocketEvent = socketEvents[socketEvents.length - 1];
+      const currentSocketEvent = socketEvents[socketEvents.length - 1] as any;
 
       if (currentSocketEvent.fn === 'handleVerification') {
         if (currentSocketEvent.status === 'IN_PROGRESS') {
@@ -92,12 +94,12 @@ function PolygonIDVerifier({
   }, [socketEvents]);
 
   // callback, send verification result back to app
-  const reportVerificationResult = result => {
+  const reportVerificationResult = (result: boolean) => {
     onVerificationResult(result);
   };
 
-  function openInNewTab(url) {
-    var win = window.open(url, '_blank');
+  function openInNewTab(url: string | URL | undefined) {
+    let win = window.open(url, '_blank') as any;
     win.focus();
   }
 
@@ -143,11 +145,11 @@ function PolygonIDVerifier({
                 </Center>
               )}
 
-              {qrCodeData.body?.scope[0].query && <p>Type: {qrCodeData.body?.scope[0].query.type}</p>}
+              {(qrCodeData as any).body?.scope[0].query && <p>Type: {(qrCodeData as any).body?.scope[0].query.type}</p>}
 
-              {qrCodeData.body.message && <p>{qrCodeData.body.message}</p>}
+              {(qrCodeData as any).body.message && <p>{(qrCodeData as any).body.message}</p>}
 
-              {qrCodeData.body.reason && <p>Reason: {qrCodeData.body.reason}</p>}
+              {(qrCodeData as any).body.reason && <p>Reason: {(qrCodeData as any).body.reason}</p>}
             </ModalBody>
 
             <ModalFooter>

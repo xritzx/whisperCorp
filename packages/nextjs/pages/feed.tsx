@@ -19,7 +19,7 @@ import { notification } from '~~/utils/scaffold-eth';
 import { createVote, loadVotes, subscribeToWakuVotes, } from '~~/services/waku/service';
 import { domain, types } from '~~/utils/signMessage';
 import CreatePostModal from '~~/components/modal';
-import { Typography } from '@mui/material';
+import { Card, Typography } from '@mui/material';
 
 
 import Paper from '@mui/material/Paper';
@@ -30,16 +30,17 @@ import IconButton from '@mui/material/IconButton';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import { BlockieAvatar } from '~~/components/scaffold-eth';
 import { maskHexAddress } from '~~/utils/hashing';
-import { log } from 'console';
+import PolygonIDVerifier from './PolygonIDVerifier';
 
 const Feed = () => {
   const { node, isLoading } = useLightNode();
   const [pageLoading, setPageLoading] = useState(true);
-  const { accountAddress, category } = useGlobalState();
+  const { accountAddress, category, companyName } = useGlobalState();
   const [uploads, setUploads] = useState<any>({});
   const [date] = useState(format(new Date(), 'yyyy-MM-dd'));
-
+  const [ provedAccess, setProvedAccess ] = useState(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const serverURL = process.env.NEXT_PUBLIC_REACT_APP_VERIFICATION_SERVER_LOCAL_HOST_URL as string;  
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -141,7 +142,7 @@ const Feed = () => {
       disclaimer: 'Your signature would be taken in the post, no data is stored',
       category,
       maskedAddress: maskHexAddress(accountAddress, 2, 15),
-      companyName: 'Airtel' // todo fetch company name from PolygonId
+      companyName: companyName
     };
     if (title.length === 0 || body.length === 0) {
       alert('Please fill out both the fields');
@@ -202,7 +203,32 @@ const Feed = () => {
 
   return (
     <>
-      <Box className={commonStyles['page-container']}>
+
+      {!provedAccess?
+          <Box className={styles['vc-check-page']}>
+            <Box>
+              <Card
+                style={{
+                  border: '2px solid #805AD5',
+                }}
+              >
+                  <p>
+                    Please verify you corporate ID with your Polygon ID issued by your corporation
+                  </p>
+  
+                  <PolygonIDVerifier 
+                    credentialType={"VerifyCompanyId"} 
+                    issuerOrHowToLink={
+                      'https://oceans404.notion.site/How-to-get-a-Verifiable-Credential-f3d34e7c98ec4147b6b2fae79066c4f6?pvs=4'
+                    }
+                    onVerificationResult={setProvedAccess} 
+                    serverUrl={serverURL} 
+                  />
+
+              </Card>
+            </Box>
+          </Box>
+      :(<Box className={commonStyles['page-container']}>
 
         <div className="p-4">
 
@@ -276,7 +302,7 @@ const Feed = () => {
             </Link>
           </div>
         ))}
-      </Box>
+      </Box>)}
     </>
   );
 };
