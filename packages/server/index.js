@@ -1,11 +1,11 @@
 const path = require('path');
 const express = require('express');
-const { auth, resolver, loaders } = require('@iden3/js-iden3-auth');
-const { getDocumentLoader } = require('@iden3/js-jsonld-merklization');
+const { auth, resolver } = require('@iden3/js-iden3-auth');
 const getRawBody = require('raw-body');
 const { Server } = require('socket.io');
 const cors = require('cors');
 const { humanReadableAuthReason, proofRequest } = require('./proofRequest');
+const fs = require('fs');
 
 require('dotenv').config();
 
@@ -14,7 +14,7 @@ const port = 8080;
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: '*',
   })
 );
 
@@ -32,7 +32,7 @@ const server = app.listen(port, () => {
 
 const io = new Server(server, {
   cors: {
-    origin: process.env.FRONTEND_URL,
+    origin: '*',
   },
 });
 
@@ -75,7 +75,7 @@ async function getAuthQr(req, res) {
     socketMessage('getAuthQr', STATUS.IN_PROGRESS, sessionId)
   );
 
-  const uri = `${process.env.SERVER_URL}${apiPath.handleVerification}?sessionId=${sessionId}`;
+  const uri = `${process.env.HOSTED_SERVER_URL}${apiPath.handleVerification}?sessionId=${sessionId}`;
   // Generate request for basic authentication
   // https://0xpolygonid.github.io/tutorials/verifier/verification-library/request-api-guide/#createauthorizationrequest
   const request = auth.createAuthorizationRequest(
@@ -131,15 +131,6 @@ async function handleVerification(req, res) {
     ['polygon:mumbai']: ethStateResolver,
   };
 
-  // Locate the directory that contains circuit's verification keys
-  // const verificationKeyloader = new loaders.FSKeyLoader(keyDIR);
-  // const sLoader = new loaders.UniversalSchemaLoader('ipfs.io');
-  const sLoader = getDocumentLoader({
-    ipfsNodeURL: 'ipfs.io',
-  });
-  const test = path.join(__dirname, keyDIR);
-  console.log('test', test);
-  // const verifier = new auth.Verifier(verificationKeyloader, sLoader, resolvers);
   const verifier = await auth.Verifier.newVerifier({
     stateResolver: resolvers,
     circuitsDir: path.join(__dirname, keyDIR),
@@ -151,6 +142,7 @@ async function handleVerification(req, res) {
       AcceptedStateTransitionDelay: 5 * 60 * 1000, // up to a 5 minute delay accepted by the Verifier
     };
     authResponse = await verifier.fullVerify(tokenStr, authRequest, opts);
+    console.log('authResponse', authResponse);
     const userId = authResponse.from;
     io.sockets.emit(
       sessionId,

@@ -1,5 +1,5 @@
 module.exports = {
-  EMP01: () => ({
+  EMP: () => ({
     "circuitId": "credentialAtomicQuerySigV2",
     "id": 1702108077,
     "query": {

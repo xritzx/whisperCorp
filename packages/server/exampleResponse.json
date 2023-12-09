@@ -1,0 +1,152 @@
+{
+  "id": "e8553040-1ad6-45fb-8c68-44d3865b32c2",
+  "typ": "application/iden3-zkp-json",
+  "type": "https://iden3-communication.io/authorization/1.0/response",
+  "thid": "7odRPYAgLGGXEKjOAAAb",
+  "body": {
+    "did_doc": {
+      "context": ["https://www.w3.org/ns/did/v1"],
+      "id": "did:polygonid:polygon:mumbai:2qHu1pd3Ew18LJp7gbVpCCS29KxbjKMmKGfkHAhMfM",
+      "service": [
+        {
+          "id": "did:polygonid:polygon:mumbai:2qHu1pd3Ew18LJp7gbVpCCS29KxbjKMmKGfkHAhMfM#push",
+          "type": "push-notification",
+          "serviceEndpoint": "https://push-staging.polygonid.com/api/v1",
+          "metadata": {
+            "devices": [
+              {
+                "ciphertext": "C1Mf5UzO6GQh2tgCOvCR+z82eEMJQr+637stJN+DkNPHAkotBUdfWhG2oUqLupD5yV1Vz+1SMzp1rfYiZnGO3ygbxNcd7NAnmyJni4L6lAp7k7Nhs9Okjdvv/9lKAYodtsWeJHKqw2GCvS4JTbZ82xnidZgsUB8QSY5lHe3GKvtMfWpw4yOImJTJhaDt3j8mXGr/HOBy3q4KxYGUNvD/hYFfV4+kuS6PxXQM6LLM+6c3PR81LpR3bjQdslCHdLLxAo74nvMyoNGZyYaZtGFmA46SwFEn4AwEdu3sog4/V4Krksb+kW5OX8OIhWP4vpewzan/Evl7Hc91i68FXk7UqJDWfymQpP4NWT+2LHkuQww12W9aLcBNZU+FtpDfj4nG0rqfy+t3DoE/XNNstiat+VxYCQYOJLpYhOkCPOCaM6h1F1r5gfBdsHgwNAzo44fbAnY6OihSFYruwY37YHl1KzFI7hzHdnvXRVF0ZW3xPw2KwWQX0k/o4KjCfDwsZtsxkoCJFC0SCIb+dMJAmmxiiCTTRrSNOHtwoVLFkBR8AhseZvEKHj3meaWAuww1Iw8cP3FjAvTQoR9o76ZiK1z8dtWbhUlqPr18g17uxOFfgKUxtvfVNYZXeK6KkSmR6EoGaN/ztJULu9HgTLmKHd7VDNpdaSvddhQrZnEprlWcvQg=",
+                "alg": "RSA-OAEP-512"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "message": "",
+    "scope": [
+      {
+        "proof": {
+          "pi_a": [
+            "4832625603310185579547705545384009706752937885984140618190601140246574534411",
+            "6713245577688442753122265100629985576022701207351931625416396122916688590345",
+            "1"
+          ],
+          "pi_b": [
+            [
+              "2966900336893209697544634066271768385285165986506391075608488477431379622097",
+              "5651607192996860023563925859641185450442008504240819834165502817587138392859"
+            ],
+            [
+              "7733058502471453889774849153917842433190496307151808934060516738348938574556",
+              "903556644310046321498730058474486685211181878575146023518735698580525303415"
+            ],
+            ["1", "0"]
+          ],
+          "pi_c": [
+            "1051186692063306324827059578298156383804253612437033000386357572720558357270",
+            "6412916991292402076678355469154815960110153122608922418098845915605609706810",
+            "1"
+          ],
+          "protocol": "groth16",
+          "curve": "bn128"
+        },
+        "pub_signals": [
+          "1",
+          "28298194859556808762520410624494863061851704637608104336279062613037879810",
+          "19510132996725366596454568784662601562609350327133164810707533894557776854012",
+          "1702108077",
+          "21196425925540611834072050424245907522377653852612334807514247180354327042",
+          "1",
+          "9073728526953024555816636166572103321426612825605885599368417100126813023565",
+          "1702116666",
+          "293485968379186599682376171704058731960",
+          "0",
+          "5830719464391053841380885314199057563363761610009128510177598078922078136089",
+          "0",
+          "1",
+          "1206392317272830019420613031444660675811037363986031509210178753854653424383",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "id": 1702108077,
+        "circuitId": "credentialAtomicQuerySigV2",
+        "vp": {
+          "@context": ["https://www.w3.org/2018/credentials/v1"],
+          "@type": "VerifiablePresentation",
+          "verifiableCredential": {
+            "@context": [
+              "https://www.w3.org/2018/credentials/v1",
+              "ipfs://QmWNfxAfNEXesnDWJkKpC2wTYymYVayBduPFtH6JtAtyt4"
+            ],
+            "@type": ["VerifiableCredential", "EMP"],
+            "credentialSubject": { "@type": "EMP", "CompanyName": "Airstack" }
+          }
+        }
+      }
+    ]
+  },
+  "from": "did:polygonid:polygon:mumbai:2qHu1pd3Ew18LJp7gbVpCCS29KxbjKMmKGfkHAhMfM",
+  "to": "did:polygonid:polygon:mumbai:2qDyy1kEo2AYcP3RT4XGea7BtxsY285szg6yP9SPrs"
+}
