@@ -43,12 +43,12 @@ function PolygonIDVerifier({
 
   const getQrCodeApi = (sessionId: string) => serverUrl + `/api/get-auth-qr?sessionId=${sessionId}`;
   const socket = io(serverUrl);
+  console.log(socket, serverUrl);
+
 
   useEffect(() => {
     socket.on('connect', () => {
       setSessionId(socket.id);
-      console.log("SIHfaoiuhfahgoiaeh");
-
       socket.on(socket.id, arg => {
         setSocketEvents(socketEvents => [...socketEvents, arg]);
       });
@@ -70,10 +70,7 @@ function PolygonIDVerifier({
   // socket event side effects
   useEffect(() => {
     if (socketEvents.length) {
-      console.log('socketEvents', socketEvents);
-
       const currentSocketEvent = socketEvents[socketEvents.length - 1] as any;
-
       if (currentSocketEvent.fn === 'handleVerification') {
         if (currentSocketEvent.status === 'IN_PROGRESS') {
           setIsHandlingVerification(true);
@@ -84,7 +81,7 @@ function PolygonIDVerifier({
             setVerfificationMessage('✅ Verified proof');
             setTimeout(() => {
               reportVerificationResult(true);
-            }, '2000');
+            }, 2000);
             socket.close();
           } else {
             setVerfificationMessage('❌ Error verifying VC');
@@ -118,7 +115,16 @@ function PolygonIDVerifier({
         <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
           <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px) hue-rotate(90deg)" />
           <ModalContent top={101}>
-            <ModalCloseButton />
+            <Center>
+              <Typography textAlign={'center'}>
+                Scan this QR code from your{' '}
+                <a href={linkDownloadPolygonIDWalletApp} target="_blank" rel="noreferrer">
+                  Polygon ID Wallet App
+                </a>{' '}
+                to prove access rights
+              </Typography>
+            </Center>
+              <ModalCloseButton sx={{marginTop: '2em'}} />
             <ModalBody textAlign={'center'} fontSize={'12px'}>
               {isHandlingVerification && (
                 <Center>
@@ -133,14 +139,6 @@ function PolygonIDVerifier({
               {verificationMessage}
               {qrCodeData && !isHandlingVerification && !verificationCheckComplete && (
                 <Center height="400px">
-                  <Typography textAlign={'center'}>
-                    Scan this QR code from your{' '}
-                    <a href={linkDownloadPolygonIDWalletApp} target="_blank" rel="noreferrer">
-                      Polygon ID Wallet App
-                    </a>{' '}
-                    to prove access rights
-                  </Typography>
-                  <br></br>
                   <QRCode value={JSON.stringify(qrCodeData)} />
                 </Center>
               )}
@@ -150,9 +148,6 @@ function PolygonIDVerifier({
               {(qrCodeData as any).body.message && <p>{(qrCodeData as any).body.message}</p>}
 
               {(qrCodeData as any).body.reason && <p>Reason: {(qrCodeData as any).body.reason}</p>}
-            </ModalBody>
-
-            <ModalFooter>
               <Button
                 fontSize={'10px'}
                 margin={1}
@@ -164,7 +159,7 @@ function PolygonIDVerifier({
               <Button fontSize={'10px'} margin={1} colorScheme="purple" onClick={() => openInNewTab(issuerOrHowToLink)}>
                 Get a {credentialType} VC <ExternalLinkIcon marginLeft={2} />
               </Button>
-            </ModalFooter>
+            </ModalBody>
           </ModalContent>
         </Modal>
       )}
