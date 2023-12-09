@@ -26,7 +26,7 @@ type PolygonVerifierType = {
   onVerificationResult: any,
   serverUrl: string
 }
- 
+
 function PolygonIDVerifier({
   credentialType,
   issuerOrHowToLink,
@@ -39,16 +39,16 @@ function PolygonIDVerifier({
   const [isHandlingVerification, setIsHandlingVerification] = useState(false);
   const [verificationCheckComplete, setVerificationCheckComplete] = useState(false);
   const [verificationMessage, setVerfificationMessage] = useState('');
-  const [socketEvents, setSocketEvents] = useState([]);  
+  const [socketEvents, setSocketEvents] = useState([]);
 
   const getQrCodeApi = (sessionId: string) => serverUrl + `/api/get-auth-qr?sessionId=${sessionId}`;
-  const socket = io(serverUrl);   
-  
+  const socket = io(serverUrl);
+
   useEffect(() => {
     socket.on('connect', () => {
       setSessionId(socket.id);
       console.log("SIHfaoiuhfahgoiaeh");
-      
+
       socket.on(socket.id, arg => {
         setSocketEvents(socketEvents => [...socketEvents, arg]);
       });
@@ -118,13 +118,6 @@ function PolygonIDVerifier({
         <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
           <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px) hue-rotate(90deg)" />
           <ModalContent top={101}>
-            <ModalHeader>
-              Scan this QR code from your{' '}
-              <a href={linkDownloadPolygonIDWalletApp} target="_blank" rel="noreferrer">
-                Polygon ID Wallet App
-              </a>{' '}
-              to prove access rights
-            </ModalHeader>
             <ModalCloseButton />
             <ModalBody textAlign={'center'} fontSize={'12px'}>
               {isHandlingVerification && (
@@ -139,9 +132,15 @@ function PolygonIDVerifier({
               <br />
               {verificationMessage}
               {qrCodeData && !isHandlingVerification && !verificationCheckComplete && (
-                <Center height="200px">
-                  {' '}
-                  {/* Adjust height as needed for vertical centering */}
+                <Center height="400px">
+                  <Typography textAlign={'center'}>
+                    Scan this QR code from your{' '}
+                    <a href={linkDownloadPolygonIDWalletApp} target="_blank" rel="noreferrer">
+                      Polygon ID Wallet App
+                    </a>{' '}
+                    to prove access rights
+                  </Typography>
+                  <br></br>
                   <QRCode value={JSON.stringify(qrCodeData)} />
                 </Center>
               )}

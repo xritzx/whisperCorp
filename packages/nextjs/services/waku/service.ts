@@ -2,6 +2,7 @@ import { LightNode, createEncoder, PageDirection, createDecoder } from '@waku/sd
 import { VoteTopic } from '~~/services/waku/interface';
 import { Thread } from '~~/services/waku/proto/thread';
 import { Vote } from '~~/services/waku/proto/vote';
+import { notification } from '~~/utils/scaffold-eth';
 
 export const sendMessageToThread = async (
   lightNode: LightNode | null,
@@ -72,19 +73,27 @@ export const decodeThreadMessage = (wakuMessage: any) => {
 };
 
 export const subscribeToWakuVotes = async (node: LightNode, callback: any) => {
-  await node.filter.subscribe([createDecoder(VoteTopic)], wakuMessage => {
-    const messageObj = Vote.decode(wakuMessage.payload);
-    callback({
-      ...messageObj,
+  try {
+    await node.filter.subscribe([createDecoder(VoteTopic)], wakuMessage => {
+      const messageObj = Vote.decode(wakuMessage.payload);
+      callback({
+        ...messageObj,
+      });
     });
-  });
+  } catch (e) {
+    notification.error("Error subscribing to votes topic");
+  }
 };
 
 export const subscribeToWakuComment = async (threadId: string, node: LightNode, callback: any) => {
-  await node.filter.subscribe([createDecoder(threadId)], wakuMessage => {
-    const messageObj = Thread.decode(wakuMessage.payload);
-    callback({
-      ...messageObj,
+  try {
+    await node.filter.subscribe([createDecoder(threadId)], wakuMessage => {
+      const messageObj = Thread.decode(wakuMessage.payload);
+      callback({
+        ...messageObj,
+      });
     });
-  });
+  } catch (e) {
+    notification.error("Error subscribing to votes topic");
+  }
 };
