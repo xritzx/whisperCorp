@@ -230,10 +230,9 @@ const Feed = () => {
             <div
               className="relative flex gap-4 pt-0 pb-1 mx-0 mt-4 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
                <BlockieAvatar 
-                address={data.maskedAddress? data.maskedAddress: '0'} 
+                address={data.maskedAddress ? data.maskedAddress : '0'}
                 // size={20} 
-                classN={"relative inline-block h-[60px] w-[60px] !rounded-full  object-cover object-center"}
-              />
+                classN={"relative inline-block h-[60px] w-[60px] !rounded-full  object-cover object-center"} size={0}              />
               <div className="flex w-full flex-col gap-0.5">
                 <div className="flex items-center justify-between">
                   <h5

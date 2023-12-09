@@ -80,25 +80,55 @@ const PostDetail = () => {
 
   return (
     <div className={`${commonStyles['page-container']} ${styles['posts-container']}`}>
-      <Card>
-        <CardContent sx={{ textDecoration: 'none !important' }}>
-          <Typography gutterBottom variant="h5" component="div">
-            {postDetails.title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {postDetails.body}
-          </Typography>
-          <Typography variant="body2" color="text.tertiary">
-            {postDetails.date}
-          </Typography>
-        </CardContent>
-      </Card>
+      <div key={postDetails.cId}
+            className="relative flex w-full max-w-[35rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none">
+            <div
+              className="relative flex gap-4 pt-0 pb-1 mx-0 mt-4 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
+               <BlockieAvatar 
+                address={postDetails.maskedAddress ? postDetails.maskedAddress : '0'}
+                // size={20} 
+                classN={"relative inline-block h-[60px] w-[60px] !rounded-full  object-cover object-center"} size={0}              />
+              <div className="flex w-full flex-col gap-0.5">
+                <div className="flex items-center justify-between">
+                  <h5
+                    className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                    {postDetails.category? postDetails.category: "📺 Misc"}
+                  </h5>
+                </div>
+                <p className="block font-sans text-base antialiased font-light leading-relaxed text-blue-gray-900" style={{ margin: "1px" }}>
+                  @ Google
+                </p>
+              </div>
+              <Typography
+                className="items-center justify-between"
+                sx={{
+                  color: postDetails.votes < 0 ? 'red' : 'green',
+                  fontWeight: 'bold',
+                  justifyContent: 'center',
+                }}
+              >
+                {postDetails.votes}
+              </Typography>
+            </div>
+
+              <div className="p-0 mb-4">
+                <h5
+                  className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900 mt-1">
+                  {postDetails.title}
+                </h5>
+
+                <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit mt-1">
+                  {postDetails.body}
+                </p>
+
+              </div>
+          </div>
       <form onSubmit={handleSubmit} className={styles['comment-container']}>
         <TextField
           variant="outlined"
           type="text"
           value={inputValue}
-          placeholder="Post you comments..."
+          placeholder="Post your comments..."
           onChange={e => setInputValue(e.target.value)}
         />
         <div>
@@ -113,9 +143,12 @@ const PostDetail = () => {
             <div>
               <BlockieAvatar 
                 address={obj.sign} 
-                size={20} 
+                size={25} 
               />
             </div>
+            <Typography variant="body2" color="text.secondary" sx={{ marginLeft: '10px' }}>
+              {(new Date(Number(obj.timestamp)).toLocaleString())}
+            </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ marginLeft: '10px' }}>
               {obj.message}
             </Typography>

@@ -46,7 +46,7 @@ export const RainbowKitCustomConnectButton = () => {
                 );
               }
 
-              if (chain.unsupported || chain.id !== configuredNetwork.id) {
+              if (chain.unsupported) {
                 return (
                   <div className="dropdown dropdown-end">
                     <label tabIndex={0} className="btn btn-error btn-sm dropdown-toggle gap-1">
@@ -138,19 +138,6 @@ export const RainbowKitCustomConnectButton = () => {
                           <QrCodeIcon className="h-6 w-4 ml-2 sm:ml-0" />
                           <span className="whitespace-nowrap">View QR Code</span>
                         </label>
-                      </li>
-                      <li>
-                        <button className="menu-item btn-sm !rounded-xl flex gap-3 py-3" type="button">
-                          <ArrowTopRightOnSquareIcon className="h-6 w-4 ml-2 sm:ml-0" />
-                          <a
-                            target="_blank"
-                            href={blockExplorerAddressLink}
-                            rel="noopener noreferrer"
-                            className="whitespace-nowrap"
-                          >
-                            View on Block Explorer
-                          </a>
-                        </button>
                       </li>
                       <li>
                         <button

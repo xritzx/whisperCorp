@@ -51,7 +51,7 @@ export const loadThread = async (lightNode: LightNode, threadId: string) => {
 
   console.log('querying the store');
   const storeQuery = lightNode.store.queryGenerator([decoder], {
-    pageDirection: PageDirection.FORWARD,
+    pageDirection: PageDirection.BACKWARD,
   });
   console.log('store query created');
 
