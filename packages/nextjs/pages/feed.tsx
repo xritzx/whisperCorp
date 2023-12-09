@@ -18,7 +18,7 @@ import { getContents, getUploads, upload } from '~~/services/lighthouse';
 import { notification } from '~~/utils/scaffold-eth';
 import { createVote, loadVotes, subscribeToWakuVotes, } from '~~/services/waku/service';
 import { domain, types } from '~~/utils/signMessage';
-import CreatePostModal from '~~/components/modal';
+import CreatePostModal from '~~/components/Modal';
 import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography, styled } from '@mui/material';
 
 

@@ -2,13 +2,11 @@
 
 /* eslint-disable prefer-const */
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import commonStyles from '../common.module.css';
 import styles from './[cid].module.css';
-import { CardContent, TextField, Typography } from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
 import { LightNode } from '@waku/sdk';
 import { useLightNode } from '~~/services/waku/LightNodeContext';
 import { Thread } from '~~/services/waku/proto/thread';

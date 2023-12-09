@@ -8,8 +8,6 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
-  ModalHeader,
   ModalOverlay,
   Spinner,
   useDisclosure,
@@ -54,8 +52,8 @@ function PolygonIDVerifier({
     } else {
       socket.on('connect', () => {
         setSessionId(socket.id);
-        socket.on(socket.id, arg => {
-          setSocketEvents(socketEvents => [...socketEvents, arg]);
+        socket.on(socket.id, (arg: any[]) => {
+          setSocketEvents((socketEvents: never[]) => [...socketEvents, arg] as never[]);
         });
       });
     }
@@ -110,7 +108,7 @@ function PolygonIDVerifier({
   };
 
   function openInNewTab(url: string | URL | undefined) {
-    let win = window.open(url, '_blank') as any;
+    const win = window.open(url, '_blank') as any;
     win.focus();
   }
 

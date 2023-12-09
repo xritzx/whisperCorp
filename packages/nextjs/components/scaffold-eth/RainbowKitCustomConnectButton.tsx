@@ -5,7 +5,6 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import { useDisconnect, useSwitchNetwork } from "wagmi";
 import {
   ArrowLeftOnRectangleIcon,
-  ArrowTopRightOnSquareIcon,
   ArrowsRightLeftIcon,
   CheckCircleIcon,
   ChevronDownIcon,
@@ -14,7 +13,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { Address, BlockieAvatar } from "~~/components/scaffold-eth";
 import { useAutoConnect, useNetworkColor } from "~~/hooks/scaffold-eth";
-import { getBlockExplorerAddressLink, getTargetNetwork } from "~~/utils/scaffold-eth";
+import { getTargetNetwork } from "~~/utils/scaffold-eth";
 
 /**
  * Custom Wagmi Connect Button (watch balance + custom design)
@@ -31,10 +30,6 @@ export const RainbowKitCustomConnectButton = () => {
     <ConnectButton.Custom>
       {({ account, chain, openConnectModal, mounted }) => {
         const connected = mounted && account && chain;
-        const blockExplorerAddressLink = account
-          ? getBlockExplorerAddressLink(getTargetNetwork(), account.address)
-          : undefined;
-
         return (
           <>
             {(() => {
@@ -50,7 +45,7 @@ export const RainbowKitCustomConnectButton = () => {
                 return (
                   <div className="dropdown dropdown-end">
                     <label tabIndex={0} className="btn btn-error btn-sm dropdown-toggle gap-1">
-                      <span>Wrong network</span>
+                      <span>We are stil network agnostic</span>
                       <ChevronDownIcon className="h-6 w-4 ml-2 sm:ml-0" />
                     </label>
                     <ul
@@ -88,7 +83,7 @@ export const RainbowKitCustomConnectButton = () => {
                   <div className="flex flex-col items-center mr-1">
                     {/* <Balance address={account.address} className="min-h-0 h-auto" /> */}
                     <span className="text-xs" style={{ color: networkColor }}>
-                      {chain.name}
+                      Current network {chain.name}, yet we are chain agnostic
                     </span>
                   </div>
                   <div className="dropdown dropdown-end leading-3">

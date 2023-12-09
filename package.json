@@ -9,6 +9,8 @@
   },
   "scripts": {
     "start:next": "yarn workspace whispercorp-dapp start",
+    "build:next": "yarn workspace whispercorp-dapp build",
+    "serve:next": "yarn workspace whispercorp-dapp serve",
     "start:server": "yarn workspace whispercorp-verifier-server start"
   },
   "packageManager": "yarn@3.2.3",
