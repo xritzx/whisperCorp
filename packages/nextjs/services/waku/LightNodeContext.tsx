@@ -1,5 +1,6 @@
 import React, { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { LightNode, Protocols, createLightNode, waitForRemotePeer } from '@waku/sdk';
+import { notification } from '~~/utils/scaffold-eth';
 
 interface LightNodeContextValue {
   node: LightNode | null;
@@ -18,13 +19,16 @@ export const LightNodeProvider: React.FC<LightNodeProviderProps> = ({ children }
   useEffect(() => {
     const initializeNode = async () => {
       try {
-        const node = await createLightNode({ defaultBootstrap: true });
+        const node = await createLightNode({ defaultBootstrap: true, pingKeepAlive: 2 });
         await node.start();
-        await waitForRemotePeer(node, [Protocols.Store, Protocols.Filter, Protocols.LightPush]);
+        await waitForRemotePeer(node, [Protocols.Store, Protocols.Filter, Protocols.LightPush], 15000);
+        console.log("Peers:", node.libp2p.getPeers());
         setLightNode(node);
+        setIsLoading(false)
       } catch (error) {
         console.error('Error initializing light node:', error);
         setIsLoading(true);
+        notification.warning('No remote peers found');
       } finally {
       }
     };
