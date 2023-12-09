@@ -20,16 +20,17 @@ export const LightNodeProvider: React.FC<LightNodeProviderProps> = ({ children }
       try {
         const node = await createLightNode({ defaultBootstrap: true });
         await node.start();
-        await waitForRemotePeer(node, [Protocols.Store]);
+        await waitForRemotePeer(node, [Protocols.Store, Protocols.Filter, Protocols.LightPush]);
         setLightNode(node);
       } catch (error) {
         console.error('Error initializing light node:', error);
+        setIsLoading(true);
       } finally {
-        setIsLoading(false);
       }
     };
     initializeNode();
   }, []);
+  
 
   return <LightNodeContext.Provider value={{ node: lightNode, isLoading }}>{children}</LightNodeContext.Provider>;
 };

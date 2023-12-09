@@ -36,7 +36,7 @@ export const sendMessageToThread = async (
 };
 
 export async function createVote(node: LightNode, data: Partial<Vote>) {
-  await node.lightPush.send(createEncoder({ contentTopic: VoteTopic }), {
+  const pushedValue = await node.lightPush.send(createEncoder({ contentTopic: VoteTopic }), {
     payload: Vote.encode({
       timestamp: BigInt(Date.now()),
       isUpvote: data.isUpvote,
@@ -44,6 +44,7 @@ export async function createVote(node: LightNode, data: Partial<Vote>) {
       userSignature: data.userSignature,
     }),
   });
+  console.log("Vote Sent:", pushedValue);
 }
 
 export const loadThread = async (lightNode: LightNode, threadId: string) => {
