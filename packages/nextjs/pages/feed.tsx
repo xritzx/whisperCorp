@@ -40,7 +40,7 @@ const Feed = () => {
   const [date] = useState(format(new Date(), 'yyyy-MM-dd'));
   const [provedAccess, setProvedAccess] = useState(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const serverURL = process.env.NEXT_PUBLIC_REACT_APP_VERIFICATION_SERVER_HOST_URL as string;
+  const serverURL = process.env.NEXT_PUBLIC_REACT_APP_VERIFICATION_SERVER_LOCAL_HOST_URL as string;
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -241,7 +241,7 @@ const Feed = () => {
                 credentialType={"VerifyCompanyId"}
                 issuerOrHowToLink={'https://oceans404.notion.site/How-to-get-a-Verifiable-Credential-f3d34e7c98ec4147b6b2fae79066c4f6?pvs=4'}
                 onVerificationResult={setProvedAccess}
-                hostedServerUrl={serverURL}
+                serverUrl={serverURL}
               />
             </Button>
           </CardActions>

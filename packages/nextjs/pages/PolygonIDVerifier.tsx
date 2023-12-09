@@ -24,14 +24,14 @@ type PolygonVerifierType = {
   credentialType: string,
   issuerOrHowToLink: string,
   onVerificationResult: any,
-  hostedServerUrl?: string
+  serverUrl: string
 }
 
 function PolygonIDVerifier({
   credentialType,
   issuerOrHowToLink,
   onVerificationResult,
-  hostedServerUrl,
+  serverUrl,
 }: PolygonVerifierType) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [sessionId, setSessionId] = useState('');
@@ -41,7 +41,6 @@ function PolygonIDVerifier({
   const [verificationMessage, setVerfificationMessage] = useState('');
   const [socketEvents, setSocketEvents] = useState([]);
 
-  const serverUrl = hostedServerUrl? hostedServerUrl: 'http://localhost:8080'
   const getQrCodeApi = (sessionId: string) => serverUrl + `/api/get-auth-qr?sessionId=${sessionId}`;
   const socket = io(serverUrl);
   console.log(socket, serverUrl);
@@ -71,8 +70,6 @@ function PolygonIDVerifier({
   // socket event side effects
   useEffect(() => {
     if (socketEvents.length) {
-      console.log('socketEvent',socketEvents);
-      
       const currentSocketEvent = socketEvents[socketEvents.length - 1] as any;
       if (currentSocketEvent.fn === 'handleVerification') {
         if (currentSocketEvent.status === 'IN_PROGRESS') {
