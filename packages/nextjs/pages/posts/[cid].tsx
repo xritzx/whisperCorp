@@ -40,6 +40,7 @@ const PostDetail = () => {
   };
 
   const onNewComment = (comment: Thread) => {
+    console.log('new Comment arrived');
     setThreadMessages(currentMessages => [comment, ...currentMessages]);
   };
 
