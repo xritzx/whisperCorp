@@ -116,7 +116,6 @@ const Feed = () => {
 
   const fetchVotes = async (messageMap: Record<string, any>) => {
     const votes = await loadVotes(node as LightNode);
-    console.log('loading votes...');
     for await (const votePromise of votes) {
       await Promise.all(
         votePromise.map(async (p: any) => {
