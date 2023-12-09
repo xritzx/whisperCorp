@@ -96,7 +96,7 @@ export const subscribeToWakuVotes = async (node: LightNode, callback: any) => {
 
 export const subscribeToWakuComment = async (threadId: string, node: LightNode, callback: any) => {
   try {
-    await node.filter.subscribe([createDecoder(threadId)], wakuMessage => {
+    await node.filter.subscribe([createDecoder(genThreadTopic(threadId))], wakuMessage => {
       const messageObj = Thread.decode(wakuMessage.payload);
       callback({
         ...messageObj,
