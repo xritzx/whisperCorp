@@ -27,12 +27,10 @@ export const LightNodeProvider: React.FC<LightNodeProviderProps> = ({ children }
         setIsLoading(false)
       } catch (error) {
         console.error('Error initializing light node:', error);
-        setIsLoading(true);
-        notification.warning('No remote peers found');
-      } finally {
+        notification.warning('No waku remote peers found');
       }
     };
-    initializeNode();
+    initializeNode().catch(e => notification.warning(`No waku remote peers found, ${e}`));
   }, []);
   
 

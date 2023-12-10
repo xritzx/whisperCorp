@@ -43,15 +43,14 @@ const PostDetail = () => {
   };
 
   useEffect(() => {
+    if (isLoading || !node) return;
     const fetchData = async () => {
-      if (isLoading) return;
       const postData = await getContents(cid);
       setPostDetails(JSON.parse(postData as any));
       await storeQueryFunction(node as LightNode, cid);
-      await subscribeToWakuComment(cid as string, node as LightNode, onNewComment);
     };
-    fetchData();
-  }, [isLoading]);
+    fetchData().then(() => subscribeToWakuComment(cid as string, node as LightNode, onNewComment))
+  }, [isLoading, node]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();

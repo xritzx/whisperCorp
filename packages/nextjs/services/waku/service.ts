@@ -76,7 +76,7 @@ export const subscribeToWakuVotes = async (node: LightNode, callback: any) => {
   try {
     await node.filter.subscribe([createDecoder(VoteTopic)], wakuMessage => {
       const messageObj = Vote.decode(wakuMessage.payload);
-      callback(messageObj);
+      callback({...messageObj});
     });
   } catch (e) {
     notification.error("Error subscribing to votes topic");
@@ -88,7 +88,7 @@ export const subscribeToWakuComment = async (threadId: string, node: LightNode, 
   try {
     await node.filter.subscribe([createDecoder(genThreadTopic(threadId))], wakuMessage => {
       const messageObj = Thread.decode(wakuMessage.payload);
-      callback(messageObj);
+      callback({...messageObj});
     });
   } catch (e) {
     notification.error("Error subscribing to votes topic");

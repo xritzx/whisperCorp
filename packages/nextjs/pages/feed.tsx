@@ -53,9 +53,9 @@ const Feed = () => {
     } else {
       console.log('has uploads');
     }
-    uploads[data.cId].votes += data.isUpvote ? 1 : -1;
-    console.log(uploads);
-    setUploads(JSON.parse(JSON.stringify(uploads)));
+    const tbud = uploads[data.cId];
+    tbud.votes += data.isUpvote ? 1 : -1;
+    setUploads({ ...uploads, [data.cId]: tbud });
   };
 
   const upVote = async (cid: string, title: string) => {
@@ -200,10 +200,9 @@ const Feed = () => {
   };
 
   useEffect(() => {
-    if (isLoading) return;
-    fetchUploads();
-    subscribeToWakuVotes(node as LightNode, onlikesData);
-  }, [isLoading]);
+    if (isLoading || !node) return;
+    fetchUploads().then(() => subscribeToWakuVotes(node as LightNode, onlikesData))
+  }, [isLoading, node]);
 
   if (isLoading || pageLoading) {
     return (
