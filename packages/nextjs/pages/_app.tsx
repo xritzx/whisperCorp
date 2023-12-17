@@ -44,6 +44,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
       </RainbowKitProvider>
     </WagmiConfig>
   );
+  
 };
 
 export default ScaffoldEthApp;
